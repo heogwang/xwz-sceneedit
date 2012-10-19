@@ -27,6 +27,8 @@ public:
     // 自定义方法
 public:
 
+signals:
+	void FreshScreen();
 
 public slots:
     void DrawScene();

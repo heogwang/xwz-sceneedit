@@ -7,16 +7,31 @@
 Scene::Scene(void)
 {
 	Vsize=Vnsize=Vtsize=MtlSize=TextureNum=modelSize=0;
+	points=NULL;
+	vnormals=NULL;
+	vtextures=NULL;
+	materials=NULL;
+	relationTable=NULL;
 }
 
 
 Scene::~Scene(void)
 {
-	for (int i=0;i<modelSize;i++)
-		delete []relationTable[i];
-	delete []relationTable;
+	if (relationTable!=NULL)
+	{
+		for (int i=0;i<modelSize;i++)
+			delete []relationTable[i];
+		delete []relationTable;
+	}
 
-	delete[] materials;
+	if(points!=NULL)
+		delete points;
+
+	if(vtextures!=NULL)
+		delete vtextures;
+
+	if (materials!=NULL)
+		delete[] materials;
 
 	for (int i=0;i<modelSize;i++)
 		delete sceneModels[i];
@@ -593,16 +608,14 @@ void Scene::DrawTest()
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	//glTranslatef(-1,-1,-1);
 	glTranslatef(0,0,-10);
 	glBegin(GL_POLYGON);
-	glColor4f(1.0f,0.0f,0.0f,1.0f);
-	glVertex3f(1.0f,0.0f,1.0);
-	glColor4f(0.0f,1.0f,0.0f,1.0f);
-	glVertex3f(1.5f,2.0f,1.0);
-	glColor4f(0.0f,0.0f,1.0f,1.0f);
-	glVertex3f(2.0f,1.0f,-0.5f);
+	glVertex3f(2.0f,2.0f,1.0);
+	glVertex3f(2.0f,0.0f,1.0);
+	glVertex3f(0.0f,0.0f,1.0f);
+	glVertex3f(0.0f,2.0f,1.0f);
 	glEnd();
-
 	//glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 	//static const GLfloat p1[3]={0.0,-1.0,2.0};
 	//static const GLfloat p2[3]={1.73205001,-1.0,-1.0};
@@ -653,28 +666,32 @@ void Scene::DrawSimpleScene()
 	if(Vsize==0)
 		return;
 
-	//glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(bsphere.center[0],bsphere.center[1],(bsphere.center[2]+bsphere.r+2),bsphere.center[0],bsphere.center[1],bsphere.center[2],0,1,0);
-	//glTranslatef(0,0,-10);
-	//glTranslatef(-bsphere.center[0],-bsphere.center[1],-bsphere.center[2]);
-	glColor3b(255,0,0);
+	ofstream Nout("E:\\an.txt");
+	ofstream Vout("E:\\av.txt");
 
-	//glBegin(GL_TRIANGLES);
-	for (int i=0;i<Vsize;i++)
+	glTranslatef(-bsphere.center[0],-bsphere.center[1],-bsphere.center[2]);
+
+	glColor3b(255,255,255);
+
+	glBegin(GL_TRIANGLES);
+	for (int i=0;i<faces.size();i++)
 	{
-		glBegin(GL_POLYGON);
+		//glBegin(GL_POLYGON);
 		Face* face=faces[i];
 		for(int j=0;j<3;j++)
 		{
 			glNormal3f(vnormals[face->vn[j]][0],vnormals[face->vn[j]][1],vnormals[face->vn[j]][2]);
+			Nout<<vnormals[face->vn[j]][0]<<"\t"<<vnormals[face->vn[j]][1]<<"\t"<<vnormals[face->vn[j]][2]<<"\n";
 			//glNormal3f(1,1,1);
 			glVertex3f(points[face->v[j]][0],points[face->v[j]][1],points[face->v[j]][2]);
+			Vout<<points[face->v[j]][0]<<"\t"<<points[face->v[j]][1]<<"\t"<<points[face->v[j]][2]<<"\n";
 		}
-		glEnd();
+		//glEnd();
 	}
+	glEnd();
 	glFlush();
+	Vout.close();
+	Nout.close();
 }
 
 

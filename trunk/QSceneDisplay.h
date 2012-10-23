@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include "gl/GL.h"
 #include "gl/GLU.h"
+#include "trimesh/Vec.h"
 
 namespace Ui {
 	class QSceneDisplay;
@@ -25,14 +26,29 @@ public:
 	double yangle;
 	double scale;
     QPoint lbtnDown; // 左键按下时，屏幕点的位置
+	//float zNear;
+	//float zFar;
+	GLfloat *eye;
+
+
+
+
+
+
 
 	// 自定义方法
 public:
+	void DrawCoodinates();
 
+
+public slots:
+	void SetDisProperty(point center, float r);
 
 
 signals:
 	void DrawScene();
+	//void SetCamera(GLfloat* eye,double scale,double aspect);
+	void SetCamera(GLfloat* eye,double scale,double aspect);
 
 protected:
 	void initializeGL();

@@ -29,12 +29,15 @@ public:
 
 signals:
 	void FreshScreen();
+	void DisplaySetting(point center,float r) ;
 
 public slots:
     void DrawScene();
     void OpenSceneFile();
     void SaveSceneFile();
-    
+    void SetCamera(GLfloat* eye,double scale,double aspect);
+
+
 private:
     Ui::MainWindow *ui;
 };

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
-
+#include <QObject>
 #include "BaseStruct.h"
 #include "trimesh/Vec.h"
 #include "Material.h"
@@ -24,10 +24,12 @@ using namespace std;
 
 class Model;
 
-class Scene
+class Scene : public QObject
 {
+	 Q_OBJECT
+
 public:
-	Scene(void);
+    Scene(QObject* parent=0);
 	~Scene(void);
 
 	// 主要属性
@@ -65,10 +67,6 @@ public:
 
 
 
-
-
-
-
 	// 主要操作方法
 public:
     bool readScene(const char* filename);
@@ -95,6 +93,10 @@ public:
 	static string FindModelTag(string name);
 	// 建立关系表
 	void BuildRelationTable(map<string,vector<int>> relationMap);
+
+public slots:
+	void SetCamera(GLfloat* eye,double scale,double aspect);
+
 };
 
 #endif

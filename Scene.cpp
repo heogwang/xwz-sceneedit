@@ -4,7 +4,7 @@
 #include <iostream>
 #include <sstream>
 
-Scene::Scene(void)
+Scene::Scene(QObject* parent) :QObject(parent)
 {
 	Vsize=Vnsize=Vtsize=MtlSize=TextureNum=modelSize=0;
 	points=NULL;
@@ -669,7 +669,7 @@ void Scene::DrawSimpleScene()
 	ofstream Nout("E:\\an.txt");
 	ofstream Vout("E:\\av.txt");
 
-	glTranslatef(-bsphere.center[0],-bsphere.center[1],-bsphere.center[2]);
+	//glTranslatef(-bsphere.center[0],-bsphere.center[1],-bsphere.center[2]);
 
 	glColor3b(255,255,255);
 
@@ -692,6 +692,36 @@ void Scene::DrawSimpleScene()
 	glFlush();
 	Vout.close();
 	Nout.close();
+}
+
+void Scene::SetCamera( GLfloat* eye,double scale,double aspect )
+{
+	GLfloat diam=2*bsphere.r;
+	GLfloat zFar=1.0+diam;
+	eye[2]=2*diam;
+	GLfloat left=bsphere.center[0]-diam;
+	GLfloat right=bsphere.center[0]+diam;
+	GLfloat bottom=bsphere.center[1]-diam;
+	GLfloat top=bsphere.center[1]+diam;
+	if (aspect<1.0)
+	{
+		bottom/=aspect;
+		top/=aspect;
+	}
+	else
+	{
+		left*=aspect;
+		right*=aspect;
+	}
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glFrustum(left,right,bottom,top,1.0,zFar);
+	//gluPerspective(50.0*scale,x,1.0,zFar);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	//glTranslatef(-scene->bsphere.center[0],-scene->bsphere.center[1],-scene->bsphere.center[2]);
+	gluLookAt(eye[0],eye[1],eye[2],bsphere.center[0],bsphere.center[1],bsphere.center[2],0.0,1.0,0.0);
 }
 
 

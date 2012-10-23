@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{29643888-360D-3E7A-8B92-C701D0A84474}</ProjectGuid>
+    <ProjectGuid>{DAD738E7-C52C-31B6-A3FD-944159053ADF}</ProjectGuid>
     <RootNamespace>QSceneEdit</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>
@@ -185,7 +185,16 @@
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC QSceneDisplay.h</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_QSceneDisplay.cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="Scene.h" />
+    <CustomBuild Include="Scene.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe;Scene.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;d:\Qt\4.8.2\include\QtCore&quot; -I&quot;d:\Qt\4.8.2\include\QtGui&quot; -I&quot;d:\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;d:\Qt\4.8.2\include&quot; -I&quot;d:\Qt\4.8.2\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -Id:\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 Scene.h -o debug\moc_Scene.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC Scene.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_Scene.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe;Scene.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;d:\Qt\4.8.2\include\QtCore&quot; -I&quot;d:\Qt\4.8.2\include\QtGui&quot; -I&quot;d:\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;d:\Qt\4.8.2\include&quot; -I&quot;d:\Qt\4.8.2\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -Id:\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 Scene.h -o release\moc_Scene.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC Scene.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_Scene.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="trimesh\TriMesh.h" />
     <ClInclude Include="trimesh\TriMesh_algo.h" />
     <ClInclude Include="trimesh\Vec.h" />
@@ -212,6 +221,12 @@
       <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="release\moc_QSceneDisplay.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_Scene.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_Scene.cpp">
       <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="debug\moc_mainwindow.cpp">

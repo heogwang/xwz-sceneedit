@@ -666,8 +666,8 @@ void Scene::DrawSimpleScene()
 	if(Vsize==0)
 		return;
 
-	ofstream Nout("E:\\an.txt");
-	ofstream Vout("E:\\av.txt");
+	//ofstream Nout("E:\\an.txt");
+	//ofstream Vout("E:\\av.txt");
 
 	//glTranslatef(-bsphere.center[0],-bsphere.center[1],-bsphere.center[2]);
 
@@ -681,17 +681,17 @@ void Scene::DrawSimpleScene()
 		for(int j=0;j<3;j++)
 		{
 			glNormal3f(vnormals[face->vn[j]][0],vnormals[face->vn[j]][1],vnormals[face->vn[j]][2]);
-			Nout<<vnormals[face->vn[j]][0]<<"\t"<<vnormals[face->vn[j]][1]<<"\t"<<vnormals[face->vn[j]][2]<<"\n";
+			//Nout<<vnormals[face->vn[j]][0]<<"\t"<<vnormals[face->vn[j]][1]<<"\t"<<vnormals[face->vn[j]][2]<<"\n";
 			//glNormal3f(1,1,1);
 			glVertex3f(points[face->v[j]][0],points[face->v[j]][1],points[face->v[j]][2]);
-			Vout<<points[face->v[j]][0]<<"\t"<<points[face->v[j]][1]<<"\t"<<points[face->v[j]][2]<<"\n";
+			//Vout<<points[face->v[j]][0]<<"\t"<<points[face->v[j]][1]<<"\t"<<points[face->v[j]][2]<<"\n";
 		}
 		//glEnd();
 	}
 	glEnd();
 	glFlush();
-	Vout.close();
-	Nout.close();
+	//Vout.close();
+	//Nout.close();
 }
 
 void Scene::SetCamera( GLfloat* eye,double scale,double aspect )

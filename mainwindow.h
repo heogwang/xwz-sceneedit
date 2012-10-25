@@ -28,8 +28,9 @@ public:
 public:
 
 signals:
-	void FreshScreen();
+	void SetDisScene(Scene* scene); // 将读入的场景指针传入显示界面
 	void DisplaySetting(point center,float r) ;
+
 
 public slots:
     void DrawScene();

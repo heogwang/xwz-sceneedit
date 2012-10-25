@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     QSceneDisplay.cpp \
     Model.cpp \
     Material.cpp \
-    Scene.cpp
+    Scene.cpp \
+    arcball.cpp
 
 HEADERS  += mainwindow.h \
     trimesh/XForm.h \
@@ -63,6 +64,7 @@ HEADERS  += mainwindow.h \
     BaseStruct.h \
     BaseFunction.h \
     Scene.h \
-    QSceneDisplay.h
+    QSceneDisplay.h \
+    arcball.h
 
 FORMS    += mainwindow.ui

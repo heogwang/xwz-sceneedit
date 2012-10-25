@@ -13,15 +13,19 @@ MainWindow::MainWindow(QWidget *parent) :
     hlayout=new QHBoxLayout;
     hlayout->addWidget(sceneDisplayWidget);
     ui->centralWidget->setLayout(hlayout);
+	// 属性设定
+	scene=NULL;
 
     connect(sceneDisplayWidget,SIGNAL(DrawScene()),this,SLOT(DrawScene()));
     connect(ui->openFileAction,SIGNAL(triggered()),this,SLOT(OpenSceneFile()));
     connect(ui->saveFileAction,SIGNAL(triggered()),this,SLOT(SaveSceneFile()));
-	connect(this,SIGNAL(FreshScreen()),sceneDisplayWidget,SLOT(update()));
+
+
+	connect(this,SIGNAL(SetDisScene(Scene*)),sceneDisplayWidget,SLOT(SetDisScene(Scene*)));
+
 	connect(this,SIGNAL(DisplaySetting(point,float)),sceneDisplayWidget,SLOT(SetDisProperty(point,float)));
     connect(sceneDisplayWidget,SIGNAL(SetCamera(GLfloat*,double,double)),this,SLOT(SetCamera(GLfloat*,double,double)));
-    // 属性设定
-    scene=NULL;
+
 }
 
 MainWindow::~MainWindow()
@@ -48,7 +52,8 @@ void MainWindow::OpenSceneFile()
     bool flag=scene->readScene(fileName.toStdString().c_str());
     if(!flag)
         QMessageBox::warning(this,tr("ReadScene"),tr("Open Scene File Error"),QMessageBox::Yes);
-	emit FreshScreen();
+
+	emit SetDisScene(scene);
 }
 
 void MainWindow::SaveSceneFile()

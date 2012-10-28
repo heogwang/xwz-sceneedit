@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include "gl/GL.h"
 #include "gl/GLU.h"
+#include "gl/glut.h"
 #include "trimesh/Vec.h"
 #include "Scene.h"
 #include "arcball.h"
@@ -28,10 +29,17 @@ public:
 	double yangle;
 	double scale;
     QPoint lbtnDown; // 左键按下时，屏幕点的位置
+	QPoint rbtnDown; // 鼠标右键按下
 	float zNear;
 	float zFar;
-	GLfloat eye[4];
+	vec eyeold;
+	vec eye; // 视线的方向
+	vec up; // 向上的方向
+	float radius;  // 视线所在球的半径
+	//GLfloat eye[4];
 	GLfloat plane[4];
+	//double dx; // 鼠标移动产生的dx
+	//double dy; // 鼠标移动产生的dy
 	//arcvec eye;
 	//arcvec center;
 	//arcvec up;

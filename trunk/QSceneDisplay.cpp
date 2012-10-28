@@ -5,10 +5,9 @@ QSceneDisplay::QSceneDisplay(QWidget *parent)
 {
 	xangle=yangle=0.0;
 	scale=1.0;
-	eye[0]=eye[1]=eye[2]=0.0;
-	eye[3]=1.0;
 	scene=NULL;
-
+	up[0]=up[2]=0;
+	up[1]=1;
 	//plane[0]=-width();
 	//plane[1]=width();
 	//plane[2]=-height();
@@ -55,11 +54,15 @@ void QSceneDisplay::paintGL()
 
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
+	//glTranslatef(0,0,-5000);
+ //   glRotated(xangle,1.0,0.0,0.0);
+ //   glRotated(yangle,0.0,1.0,0.0);
+	//
 	//double aspect=(double)width()/height();
 
 	//emit SetCamera(eye,scale,aspect);
 	SetCamera();
-	DrawCoodinates();
+	//DrawCoodinates();
 
 
 	//glMatrixMode(GL_MODELVIEW);
@@ -79,6 +82,10 @@ void QSceneDisplay::resizeGL( int width,int height )
 	glViewport(0,0,width,height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
+
+	GLfloat x=GLfloat(width)/height;
+	glFrustum(-x,+x,-1.0,+1.0,1.0,10000.0);
+
 	GLfloat aspect=GLfloat(width)/height;
 	//if (aspect<1) 
 	//	glOrtho (-100.0, 100.0, -100 / aspect, 100.0 / aspect, 1.0, -1.0);
@@ -102,31 +109,92 @@ void QSceneDisplay::resizeGL( int width,int height )
 	//glFrustum(-x,+x,-1.0,+1.0,4.0,100.0);
 	//gluPerspective(45,x,1.0,10000.0);
 	//glOrtho(-x,x,-1.0,1.0,4.0,100);
+
 	glMatrixMode(GL_MODELVIEW);
 }
 
 void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 {
-    QPoint point=event->pos();
-    double dx=double(lbtnDown.x()-point.x())/width();
-    double dy=double(lbtnDown.y()-point.y())/height();
-	eye[0]+=dx;
-	eye[1]+=dy;
+	QPoint point=event->pos();
+	float dx=float(point.x()-lbtnDown.x())*(plane[1]-plane[0])/width(); // 转换到视景体移动的距离
+	float dy=float(lbtnDown.y()-point.y())*(plane[3]-plane[2])/height();
+	if (event->buttons() & Qt::LeftButton)
+	{
+		plane[0]-=dx;
+		plane[1]-=dx;
+		plane[2]-=dy;
+		plane[3]-=dy;
+		lbtnDown=point;
+	}
+	else if (event->buttons()&Qt::RightButton)
+	{
+		// 计算新的视点的位置
+		vec w=eye-scene->bsphere.center; //视线方向
+		//radius=len(w);
+		w=normalize(w);
+
+		vec u=w%up; // 水平方向
+		u=normalize(u); 
+
+
+		vec m=dx*u+dy*up;
+		//float length=len(m);
+		//length/=20;  // 降低灵敏度
+		//if (length>0.0)
+		//{
+			//double angle=length/radius;
+			m=normalize(m);
+			//angle*=-1;  // 反向操作视点
+			w=w-(float)0.05*m;
+			w=normalize(w);
+			eye=scene->bsphere.center+radius*w;
+			//eyeold=eye;
+			//eye=scene->bsphere.center+radius*((float)cos(angle)*w+(float)sin(angle)*m);
+			u=up%w;
+			up=w%u;
+		//}
+
+		//vec pos(0,1,0);
+		////pos=normalize(pos);
+
+		//eye=scene->bsphere.center+radius*pos;
+		//vec z(0,0,1);
+		////vec m=eye%z;
+		////up=eye%m;
+		//up=z;
+	}
+
+	//eye[0]+=dx;
+	//eye[1]+=dy;
 	//xangle -= 180 * dy;
 	//yangle -= 180 * dx;
     this->updateGL();
-    lbtnDown=point;
 }
 
 void QSceneDisplay::mousePressEvent(QMouseEvent *event)
 {
     if(event->button()==Qt::LeftButton)
         lbtnDown=event->pos();
+	else if(event->button()==Qt::RightButton)
+		rbtnDown=event->pos();
+	setMouseTracking(true);
 }
 
 void QSceneDisplay::wheelEvent(QWheelEvent *event)
 {
+	double numDegrees = -event->delta() / 8.0;
+	double numSteps = numDegrees / 15.0;
+	scale = pow(1.125, numSteps);
+	double width=(plane[1]-plane[0])*scale;
+	double height=(plane[3]-plane[2])*scale;
+	double centerx=(plane[0]+plane[1])/2;
+	double centery=(plane[3]+plane[2])/2;
 
+	plane[0]=centerx-width/2;
+	plane[1]=centerx+width/2;
+	plane[2]=centery-height/2;
+	plane[3]=centery+height/2;
+	this->updateGL();
 }
 
 void QSceneDisplay::DrawCoodinates()
@@ -161,18 +229,12 @@ void QSceneDisplay::SetDisProperty( point center, float r )
 void QSceneDisplay::SetDisScene( Scene* scene )
 {
 	this->scene=scene;
+	radius=scene->bsphere.r;
+	// 设置视点位置
 	eye[0]=scene->bsphere.center[0];
 	eye[1]=scene->bsphere.center[1];
-	eye[2]=scene->bsphere.center[2]+scene->bsphere.r;
-	updateGL();
-}
-
-void QSceneDisplay::SetCamera()
-{
-	if(scene==NULL)
-		return;
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+	eye[2]=scene->bsphere.center[2]+radius;
+	// 设置视景体的区域
 	double diam=2*scene->bsphere.r;
 	double tmp=abs(scene->bsphere.center[0]);
 	plane[0]=-(tmp+diam);
@@ -195,16 +257,48 @@ void QSceneDisplay::SetCamera()
 		plane[0]*=aspect;
 		plane[1]*=aspect;
 	}
+	updateGL();
+}
+
+void QSceneDisplay::SetCamera()
+{
+	if(scene==NULL)
+		return;
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
 	//double z=abs(scene->bsphere.center[3]);
 	/*glOrtho(plane[0],plane[1],plane[2],plane[3],z+10,-z-10);*/
+
 	glOrtho(plane[0],plane[1],plane[2],plane[3],-10000,10000);
+	//gluLookAt(-0.2,0.6,1,scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],0,1,0);
+
 	//gluLookAt(eye.x,eye.y,eye.z,)
-	//glOrtho(-10000,10000,-10000,10000,-10000,10000);
-	gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],0,1,0);
-	//gluLookAt(scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2]+10,scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],0,1,0);
+	//glOrtho(-4,6,-4,6,-10000,10000);
+	//gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],0,1,0);
+	/*gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);*/
+	//gluLookAt(0,0,1,0,0,0,up[0],up[1],up[2]);
+	//gluLookAt(scene->bsphere.center[0]+0.1,scene->bsphere.center[1]+0.1,scene->bsphere.center[2]+0.1,scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
 	//glRotated(xangle,scene->bsphere.center[0],0.0,0.0);
 	//glRotated(yangle,0.0,scene->bsphere.center[1],0.0);
 	//gluLookAt(0,0,5,0,0,-1,0,1,0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
+
+	//glBegin(GL_LINE_STRIP);
+	//glVertex3f(-2,3,0);
+	//glVertex3f(3,3,0);
+	//glVertex3f(3,-2,0);
+	//glVertex3f(-2,-2,0);
+	//glVertex3f(-2,3,0);
+	//glEnd();
+	//glTranslatef(1,1,0);
+	//glutSolidSphere(2,50,50);
+
+	//glPushMatrix();
+	//glTranslatef(1,1,0);
+	//glutSolidSphere(2,50,50);
+	//glPopMatrix();
+
 }

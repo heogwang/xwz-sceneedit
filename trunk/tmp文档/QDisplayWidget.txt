@@ -1,7 +1,5 @@
 #include "QSceneDisplay.h"
 
-const float PI=3.1415926;
-
 QSceneDisplay::QSceneDisplay(QWidget *parent)
 	: QGLWidget(parent)
 {
@@ -130,63 +128,30 @@ void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 	}
 	else if (event->buttons()&Qt::RightButton)
 	{
-		vec e2t=eye-scene->bsphere.center;
-		float angley=float(point.x()-lbtnDown.x())*PI/(2*width());  // 绕y旋转的角度
-		float anglex=float(lbtnDown.y()-point.y())*PI/(2*height());
-		eye[0]=-(e2t[2]*sin(angley)+e2t[0]*cos(angley));
-		eye[1]=e2t[1]*cos(anglex)+e2t[2]*cos(angley)*sin(anglex)-e2t[0]*sin(angley)*cos(anglex);
-		eye[2]=e2t[2]*cos(angley)*sin(anglex)-e2t[0]*sin(angley)*cos(anglex)-e2t[1]*sin(anglex);
-		eye=normalize(eye);
+		// 计算新的视点的位置
+		vec w=eye-scene->bsphere.center; //视线方向
+		//radius=len(w);
+		w=normalize(w);
 
-		vec m(0,eye[1],eye[3]);
-		vec u=m%eye;
-		up=eye%u;
-		eye=eye*radius+scene->bsphere.center;
+		vec u=w%up; // 水平方向
+		u=normalize(u); 
 
 
-		// 计算方法一
-		//vec x(1,0,0);
-		//
-		//// 计算新的视点的位置
-		//vec w=eye-scene->bsphere.center; //视线方向
-		////radius=len(w);
-		//w=normalize(w);
-
-		//vec u=w%up; // 水平方向
-		//u=normalize(u); 
-
-		//vec m=dx*u;
-		//m=normalize(m);
-		//w=w-(float)0.05*m; //更新后的w
-		//w=normalize(w);
-
-		//u=up%w; // 更新水平方向
-		//u=normalize(u);
-
-		//m=dy*up;
-		//m=normalize(m);
-		//w=w-(float)0.05*m; //更新后的w
-		//w=normalize(w);
-
-		//eye=scene->bsphere.center+radius*w;
-
-		//up=w%u;
-
-		//vec m=dx*u+dy*up;
-		////float length=len(m);
-		////length/=20;  // 降低灵敏度
-		////if (length>0.0)
-		////{
-		//	//double angle=length/radius;
-		//	m=normalize(m);
-		//	//angle*=-1;  // 反向操作视点
-		//	w=w-(float)0.05*m;
-		//	w=normalize(w);
-		//	eye=scene->bsphere.center+radius*w;
-		//	//eyeold=eye;
-		//	//eye=scene->bsphere.center+radius*((float)cos(angle)*w+(float)sin(angle)*m);
-		//	u=up%w;
-		//	up=w%u;
+		vec m=dx*u+dy*up;
+		//float length=len(m);
+		//length/=20;  // 降低灵敏度
+		//if (length>0.0)
+		//{
+			//double angle=length/radius;
+			m=normalize(m);
+			//angle*=-1;  // 反向操作视点
+			w=w-(float)0.05*m;
+			w=normalize(w);
+			eye=scene->bsphere.center+radius*w;
+			//eyeold=eye;
+			//eye=scene->bsphere.center+radius*((float)cos(angle)*w+(float)sin(angle)*m);
+			u=up%w;
+			up=w%u;
 		//}
 
 		//vec pos(0,1,0);

@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{74154412-8921-34CF-B2A5-7308C6176782}</ProjectGuid>
+    <ProjectGuid>{DAD738E7-C52C-31B6-A3FD-944159053ADF}</ProjectGuid>
     <RootNamespace>QSceneEdit</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>
@@ -54,7 +54,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
     <ClCompile>
-      <AdditionalIncludeDirectories>&quot;..\..\Qt\4.8.2\include\QtCore&quot;;&quot;..\..\Qt\4.8.2\include\QtGui&quot;;&quot;..\..\Qt\4.8.2\include\QtOpenGL&quot;;&quot;..\..\Qt\4.8.2\include&quot;;&quot;..\..\Qt\4.8.2\include\ActiveQt&quot;;&quot;debug&quot;;&quot;.&quot;;..\..\Qt\4.8.2\mkspecs\default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>&quot;d:\Qt\4.8.2\include\QtCore&quot;;&quot;d:\Qt\4.8.2\include\QtGui&quot;;&quot;d:\Qt\4.8.2\include\QtOpenGL&quot;;&quot;d:\Qt\4.8.2\include&quot;;&quot;d:\Qt\4.8.2\include\ActiveQt&quot;;&quot;debug&quot;;&quot;.&quot;;d:\Qt\4.8.2\mkspecs\default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -73,8 +73,8 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;e:\Qt\4.8.2\lib\qtmaind.lib;e:\Qt\4.8.2\lib\QtOpenGLd4.lib;e:\Qt\4.8.2\lib\QtGuid4.lib;e:\Qt\4.8.2\lib\QtCored4.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>e:\Qt\4.8.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;d:\Qt\4.8.2\lib\qtmaind.lib;d:\Qt\4.8.2\lib\QtOpenGLd4.lib;d:\Qt\4.8.2\lib\QtGuid4.lib;d:\Qt\4.8.2\lib\QtCored4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>d:\Qt\4.8.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -95,7 +95,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">
     <ClCompile>
-      <AdditionalIncludeDirectories>&quot;..\..\Qt\4.8.2\include\QtCore&quot;;&quot;..\..\Qt\4.8.2\include\QtGui&quot;;&quot;..\..\Qt\4.8.2\include\QtOpenGL&quot;;&quot;..\..\Qt\4.8.2\include&quot;;&quot;..\..\Qt\4.8.2\include\ActiveQt&quot;;&quot;release&quot;;&quot;.&quot;;..\..\Qt\4.8.2\mkspecs\default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>&quot;d:\Qt\4.8.2\include\QtCore&quot;;&quot;d:\Qt\4.8.2\include\QtGui&quot;;&quot;d:\Qt\4.8.2\include\QtOpenGL&quot;;&quot;d:\Qt\4.8.2\include&quot;;&quot;d:\Qt\4.8.2\include\ActiveQt&quot;;&quot;release&quot;;&quot;.&quot;;d:\Qt\4.8.2\mkspecs\default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -113,8 +113,8 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;e:\Qt\4.8.2\lib\qtmain.lib;e:\Qt\4.8.2\lib\QtOpenGL4.lib;e:\Qt\4.8.2\lib\QtGui4.lib;e:\Qt\4.8.2\lib\QtCore4.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>e:\Qt\4.8.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;d:\Qt\4.8.2\lib\qtmain.lib;d:\Qt\4.8.2\lib\QtOpenGL4.lib;d:\Qt\4.8.2\lib\QtGui4.lib;d:\Qt\4.8.2\lib\QtCore4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>d:\Qt\4.8.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -177,22 +177,22 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Model.h" />
     <CustomBuild Include="QSceneDisplay.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">QSceneDisplay.h;e:\Qt\4.8.2\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">e:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\Qt\4.8.2\include\QtCore&quot; -I&quot;..\..\Qt\4.8.2\include\QtGui&quot; -I&quot;..\..\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;..\..\Qt\4.8.2\include&quot; -I&quot;..\..\Qt\4.8.2\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 QSceneDisplay.h -o debug\moc_QSceneDisplay.cpp</Command>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe;QSceneDisplay.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;d:\Qt\4.8.2\include\QtCore&quot; -I&quot;d:\Qt\4.8.2\include\QtGui&quot; -I&quot;d:\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;d:\Qt\4.8.2\include&quot; -I&quot;d:\Qt\4.8.2\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -Id:\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 QSceneDisplay.h -o debug\moc_QSceneDisplay.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC QSceneDisplay.h</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_QSceneDisplay.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">QSceneDisplay.h;e:\Qt\4.8.2\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">e:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\Qt\4.8.2\include\QtCore&quot; -I&quot;..\..\Qt\4.8.2\include\QtGui&quot; -I&quot;..\..\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;..\..\Qt\4.8.2\include&quot; -I&quot;..\..\Qt\4.8.2\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 QSceneDisplay.h -o release\moc_QSceneDisplay.cpp</Command>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe;QSceneDisplay.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;d:\Qt\4.8.2\include\QtCore&quot; -I&quot;d:\Qt\4.8.2\include\QtGui&quot; -I&quot;d:\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;d:\Qt\4.8.2\include&quot; -I&quot;d:\Qt\4.8.2\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -Id:\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 QSceneDisplay.h -o release\moc_QSceneDisplay.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC QSceneDisplay.h</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_QSceneDisplay.cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="Scene.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">Scene.h;e:\Qt\4.8.2\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">e:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\Qt\4.8.2\include\QtCore&quot; -I&quot;..\..\Qt\4.8.2\include\QtGui&quot; -I&quot;..\..\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;..\..\Qt\4.8.2\include&quot; -I&quot;..\..\Qt\4.8.2\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 Scene.h -o debug\moc_Scene.cpp</Command>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe;Scene.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;d:\Qt\4.8.2\include\QtCore&quot; -I&quot;d:\Qt\4.8.2\include\QtGui&quot; -I&quot;d:\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;d:\Qt\4.8.2\include&quot; -I&quot;d:\Qt\4.8.2\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -Id:\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 Scene.h -o debug\moc_Scene.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC Scene.h</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_Scene.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">Scene.h;e:\Qt\4.8.2\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">e:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\Qt\4.8.2\include\QtCore&quot; -I&quot;..\..\Qt\4.8.2\include\QtGui&quot; -I&quot;..\..\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;..\..\Qt\4.8.2\include&quot; -I&quot;..\..\Qt\4.8.2\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 Scene.h -o release\moc_Scene.cpp</Command>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe;Scene.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;d:\Qt\4.8.2\include\QtCore&quot; -I&quot;d:\Qt\4.8.2\include\QtGui&quot; -I&quot;d:\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;d:\Qt\4.8.2\include&quot; -I&quot;d:\Qt\4.8.2\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -Id:\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 Scene.h -o release\moc_Scene.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC Scene.h</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_Scene.cpp;%(Outputs)</Outputs>
     </CustomBuild>
@@ -204,12 +204,12 @@
     <ClInclude Include="trimesh\bsphere.h" />
     <ClInclude Include="trimesh\lineqn.h" />
     <CustomBuild Include="mainwindow.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">e:\Qt\4.8.2\bin\moc.exe;mainwindow.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">e:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\Qt\4.8.2\include\QtCore&quot; -I&quot;..\..\Qt\4.8.2\include\QtGui&quot; -I&quot;..\..\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;..\..\Qt\4.8.2\include&quot; -I&quot;..\..\Qt\4.8.2\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 mainwindow.h -o debug\moc_mainwindow.cpp</Command>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe;mainwindow.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;d:\Qt\4.8.2\include\QtCore&quot; -I&quot;d:\Qt\4.8.2\include\QtGui&quot; -I&quot;d:\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;d:\Qt\4.8.2\include&quot; -I&quot;d:\Qt\4.8.2\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -Id:\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 mainwindow.h -o debug\moc_mainwindow.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC mainwindow.h</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_mainwindow.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">e:\Qt\4.8.2\bin\moc.exe;mainwindow.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">e:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\Qt\4.8.2\include\QtCore&quot; -I&quot;..\..\Qt\4.8.2\include\QtGui&quot; -I&quot;..\..\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;..\..\Qt\4.8.2\include&quot; -I&quot;..\..\Qt\4.8.2\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 mainwindow.h -o release\moc_mainwindow.cpp</Command>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe;mainwindow.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;d:\Qt\4.8.2\include\QtCore&quot; -I&quot;d:\Qt\4.8.2\include\QtGui&quot; -I&quot;d:\Qt\4.8.2\include\QtOpenGL&quot; -I&quot;d:\Qt\4.8.2\include&quot; -I&quot;d:\Qt\4.8.2\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -Id:\Qt\4.8.2\mkspecs\default -D_MSC_VER=1600 -DWIN32 mainwindow.h -o release\moc_mainwindow.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC mainwindow.h</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_mainwindow.cpp;%(Outputs)</Outputs>
     </CustomBuild>
@@ -242,12 +242,12 @@
   <ItemGroup>
     <CustomBuild Include="mainwindow.ui">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">e:\Qt\4.8.2\bin\uic.exe;mainwindow.ui;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">e:\Qt\4.8.2\bin\uic.exe mainwindow.ui -o ui_mainwindow.h</Command>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\uic.exe;mainwindow.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">D:\Qt\4.8.2\bin\uic.exe mainwindow.ui -o ui_mainwindow.h</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">UIC mainwindow.ui</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">ui_mainwindow.h;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">e:\Qt\4.8.2\bin\uic.exe;mainwindow.ui;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">e:\Qt\4.8.2\bin\uic.exe mainwindow.ui -o ui_mainwindow.h</Command>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\uic.exe;mainwindow.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">D:\Qt\4.8.2\bin\uic.exe mainwindow.ui -o ui_mainwindow.h</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">UIC mainwindow.ui</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">ui_mainwindow.h;%(Outputs)</Outputs>
     </CustomBuild>

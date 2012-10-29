@@ -25,11 +25,10 @@ public:
 
 	// 自定义属性
 public:
-	double xangle;
-	double yangle;
-	double scale;
-    QPoint lbtnDown; // 左键按下时，屏幕点的位置
-	QPoint rbtnDown; // 鼠标右键按下
+	float xangle; //累计角度值
+	float yangle; // 累计角度值
+	float scale;
+    QPoint btnDown; // 左键按下时，屏幕点的位置
 	float zNear;
 	float zFar;
 	vec eyeold;

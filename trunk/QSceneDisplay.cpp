@@ -53,24 +53,11 @@ void QSceneDisplay::paintGL()
 
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
-	//glTranslatef(0,0,-5000);
- //   glRotated(xangle,1.0,0.0,0.0);
- //   glRotated(yangle,0.0,1.0,0.0);
-	//
-	//double aspect=(double)width()/height();
-
-	//emit SetCamera(eye,scale,aspect);
+	if(scene==NULL)
+		return;
 	SetCamera();
 
-
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
-
-	//glTranslatef(0,0,-5);
-	//glRotated(xangle,1.0,0.0,0.0);
-	//glRotated(yangle,0.0,1.0,0.0);
-
-	emit DrawScene();
+	DrawScene();
 }
 
 void QSceneDisplay::resizeGL( int width,int height )
@@ -81,32 +68,7 @@ void QSceneDisplay::resizeGL( int width,int height )
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	//GLfloat x=GLfloat(width)/height;
-	//glFrustum(-x,+x,-1.0,+1.0,1.0,10000.0);
-
-	//GLfloat aspect=GLfloat(width)/height;
-	//if (aspect<1) 
-	//	glOrtho (-100.0, 100.0, -100 / aspect, 100.0 / aspect, 1.0, -1.0);
-	//else 
-	//	glOrtho (-100.0 * aspect, 100.0 * aspect, -100.0, 100.0, 1.0, -1.0);
-	//plane[0]=-width;
-	//plane[1]=width;
-	//plane[2]=-height;
-	//plane[3]=height;
-	//if (aspect<1)
-	//{
-	//	plane[2]/=aspect;
-	//	plane[3]/=aspect;
-	//}
-	//else
-	//{
-	//	plane[0]*=aspect;
-	//	plane[1]*=aspect;
-	//}
 	glOrtho(plane[0],plane[1],plane[2],plane[3],-10000,10000);
-	//glFrustum(-x,+x,-1.0,+1.0,4.0,100.0);
-	//gluPerspective(45,x,1.0,10000.0);
-	//glOrtho(-x,x,-1.0,1.0,4.0,100);
 
 	glMatrixMode(GL_MODELVIEW);
 }
@@ -135,9 +97,15 @@ void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 			xangle+=360;
 
 		if (yangle>360)
+		{
 			yangle-=360;
+			up[1]*=-1;
+		}
 		else if(yangle<0)
+		{
 			yangle+=360;
+			up[1]*=-1;
+		}
 
 		float anglex=speed*xangle;
 		float angley=speed*yangle;
@@ -145,82 +113,13 @@ void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 		eye[0]=sin(angley)*cos(anglex);
 		eye[1]=cos(angley);
 		eye[2]=sin(angley)*sin(anglex);
-		//eye=normalize(eye);
+		eye=normalize(eye);
 
 		eye=scene->bsphere.center+radius*eye;
-		//vec e2t=eye-scene->bsphere.center;
-		//float angley=float(point.x()-lbtnDown.x())*PI/(2*width());  // 绕y旋转的角度
-		//float anglex=float(lbtnDown.y()-point.y())*PI/(2*height());
-		//eye[0]=-(e2t[2]*sin(angley)+e2t[0]*cos(angley));
-		//eye[1]=e2t[1]*cos(anglex)+e2t[2]*cos(angley)*sin(anglex)-e2t[0]*sin(angley)*cos(anglex);
-		//eye[2]=e2t[2]*cos(angley)*sin(anglex)-e2t[0]*sin(angley)*cos(anglex)-e2t[1]*sin(anglex);
-		//eye=normalize(eye);
 
-		//vec m(0,eye[1],eye[3]);
-		//vec u=m%eye;
-		//up=eye%u;
-		//eye=eye*radius+scene->bsphere.center;
-
-
-		// 计算方法一
-		//vec x(1,0,0);
-		//
-		//// 计算新的视点的位置
-		//vec w=eye-scene->bsphere.center; //视线方向
-		////radius=len(w);
-		//w=normalize(w);
-
-		//vec u=w%up; // 水平方向
-		//u=normalize(u); 
-
-		//vec m=dx*u;
-		//m=normalize(m);
-		//w=w-(float)0.05*m; //更新后的w
-		//w=normalize(w);
-
-		//u=up%w; // 更新水平方向
-		//u=normalize(u);
-
-		//m=dy*up;
-		//m=normalize(m);
-		//w=w-(float)0.05*m; //更新后的w
-		//w=normalize(w);
-
-		//eye=scene->bsphere.center+radius*w;
-
-		//up=w%u;
-
-		// 计算新的视点的位置
-		// 方法三
-		//vec w=eye-scene->bsphere.center; //视线方向
-		////radius=len(w);
-		//w=normalize(w);
-
-		//vec u=w%up; // 水平方向
-		//u=normalize(u); 
-
-		//vec m=dx*u+dy*up;
-		//m=normalize(m);
-		////angle*=-1;  // 反向操作视点
-		//w=w-(float)0.05*m;
-		//w=normalize(w);
-		//eye=scene->bsphere.center+radius*w;
-		////eyeold=eye;
-		////eye=scene->bsphere.center+radius*((float)cos(angle)*w+(float)sin(angle)*m);
-		//u=up%w;
-		//up=w%u;
-		ofstream out("E:\\eye.txt",ios::app);
-		out<<"Right Button Moved !!!!"<<xangle<<"\t"<<yangle<<"\t"<<eye[0]<<"\t"<<eye[1]<<"\t"<<eye[2]<<"\n";
-		out<<"Right Button Moved !!!!"<<point.x()<<"\t"<<point.y()<<"\n";
-		//DrawCoodinates();
-		out.close();
 		btnDown=point;
 	}
 
-	//eye[0]+=dx;
-	//eye[1]+=dy;
-	//xangle -= 180 * dy;
-	//yangle -= 180 * dx;
     this->updateGL();
 }
 
@@ -228,20 +127,6 @@ void QSceneDisplay::mousePressEvent(QMouseEvent *event)
 {
 	setMouseTracking(true);
 	btnDown=event->pos();
-		ofstream out("E:\\eye.txt",ios::app);
-		out<<"~~~~~Right Button Clicked !!!!"<<xangle<<"\t"<<yangle<<"\t"<<eye[0]<<"\t"<<eye[1]<<"\t"<<eye[2]<<"\n";
-		out<<"~~~~~Right Button Clicked !!!!"<<btnDown.x()<<"\t"<<btnDown.y()<<"\n";
-		out.close();
- //   if(event->button()==Qt::LeftButton)
- //       btnDown=event->pos();
-	//else if(event->button()==Qt::RightButton)
-	//{
-	//	rbtnDown=event->pos();
-	//	ofstream out("E:\\eye.txt",ios::app);
-	//	out<<"Right Button Clicked !!!!"<<xangle<<"\t"<<yangle<<"\t"<<eye[0]<<"\t"<<eye[1]<<"\t"<<eye[2]<<"\n";
-	//	//DrawCoodinates();
-	//	out.close();
-	//}
 }
 
 void QSceneDisplay::wheelEvent(QWheelEvent *event)
@@ -277,19 +162,6 @@ void QSceneDisplay::DrawCoodinates()
 	glEnd();
 }
 
-void QSceneDisplay::SetDisProperty( point center, float r )
-{
-	//zFar=zNear+2*r;
-	//eye[2]=4*r;
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	GLfloat x=GLfloat(width())/height();
-	gluPerspective(50.0*scale,x,1,2*r+1);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(eye[0],eye[1],eye[2],center[0],center[1],center[2],0.0,1.0,0.0);
-}
-
 void QSceneDisplay::SetDisScene( Scene* scene )
 {
 	this->scene=scene;
@@ -309,10 +181,7 @@ void QSceneDisplay::SetDisScene( Scene* scene )
 	tmp=abs(scene->bsphere.center[1]);
 	plane[2]=-(tmp+diam);
 	plane[3]=-plane[2];
-	//plane[0]=scene->bsphere.center[0]-diam;
-	//plane[1]=scene->bsphere.center[0]+diam;
-	//plane[2]=scene->bsphere.center[1]-diam;
-	//plane[3]=scene->bsphere.center[1]+diam;
+	
 	double aspect=(double)width()/height();
 	if (aspect<1)
 	{
@@ -329,48 +198,27 @@ void QSceneDisplay::SetDisScene( Scene* scene )
 
 void QSceneDisplay::SetCamera()
 {
-	if(scene==NULL)
-		return;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	//double z=abs(scene->bsphere.center[3]);
-	/*glOrtho(plane[0],plane[1],plane[2],plane[3],z+10,-z-10);*/
-
 	glOrtho(plane[0],plane[1],plane[2],plane[3],-10000,10000);
-	//gluLookAt(-0.2,0.6,1,scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],0,1,0);
-
-	//gluLookAt(eye.x,eye.y,eye.z,)
-	//glOrtho(-4,6,-4,6,-10000,10000);
-	//gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],0,1,0);
-	/*gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);*/
-	//gluLookAt(0,0,1,0,0,0,up[0],up[1],up[2]);
-	//gluLookAt(scene->bsphere.center[0]+0.1,scene->bsphere.center[1]+0.1,scene->bsphere.center[2]+0.1,scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
-	//glRotated(xangle,scene->bsphere.center[0],0.0,0.0);
-	//glRotated(yangle,0.0,scene->bsphere.center[1],0.0);
-	//gluLookAt(0,0,5,0,0,-1,0,1,0);
+	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
 
-	//ofstream out("E:\\eye.txt",ios::app);
-	//out<<xangle<<"\t"<<yangle<<"\t"<<eye[0]<<"\t"<<eye[1]<<"\t"<<eye[2]<<"\n";
-	////DrawCoodinates();
+}
 
-	//out.close();
-	//glBegin(GL_LINE_STRIP);
-	//glVertex3f(-2,3,0);
-	//glVertex3f(3,3,0);
-	//glVertex3f(3,-2,0);
-	//glVertex3f(-2,-2,0);
-	//glVertex3f(-2,3,0);
-	//glEnd();
-	//glTranslatef(1,1,0);
-	//glutSolidSphere(2,50,50);
-
-	//glPushMatrix();
-	//glTranslatef(1,1,0);
-	//glutSolidSphere(2,50,50);
-	//glPopMatrix();
-
+void QSceneDisplay::DrawScene()
+{
+	//scene->DrawSimpleScene();
+	// 不绘制场景的墙壁
+	int occurs = -1;
+	map<string, int>::iterator it = scene->ModelMap.find("Wall");
+	if(it != scene->ModelMap.end())
+	{
+		occurs = it ->second;
+		scene->sceneModels[occurs]->visible=false;
+	}
+	scene->DrawScene();
 }

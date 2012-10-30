@@ -29,19 +29,10 @@ public:
 	float yangle; // 累计角度值
 	float scale;
     QPoint btnDown; // 左键按下时，屏幕点的位置
-	float zNear;
-	float zFar;
-	vec eyeold;
 	vec eye; // 视线的方向
 	vec up; // 向上的方向
 	float radius;  // 视线所在球的半径
-	//GLfloat eye[4];
 	GLfloat plane[4];
-	//double dx; // 鼠标移动产生的dx
-	//double dy; // 鼠标移动产生的dy
-	//arcvec eye;
-	//arcvec center;
-	//arcvec up;
 
 	Scene *scene;
 
@@ -53,16 +44,15 @@ public:
 	// 自定义方法
 public:
 	void DrawCoodinates();
+	void DrawScene();
 
 
 public slots:
-	void SetDisProperty(point center, float r);
 	void SetCamera();
-	void SetDisScene(Scene* scene);
+	void SetDisScene(Scene* scene);  // 将读入的场景传入过来，方便进行操作
+
 
 signals:
-	void DrawScene();
-	//void SetCamera(GLfloat* eye,double scale,double aspect);
 
 protected:
 	void initializeGL();

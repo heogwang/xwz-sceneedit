@@ -46,6 +46,8 @@ bool Scene::readScene(const char* filename )
 	bool flag=readHelper(filename);
 	need_bbox();
 	need_bsphere();
+	//mvisible=new Byte[modelSize];
+	//memset(mvisible,1,modelSize);
 	return flag;
 }
 
@@ -106,7 +108,6 @@ bool Scene::read_obj(const char* filename)
 	vector<int> thisvt;
 
 	// 解析 group标签
-	map<string,vector<int>> RelationMap; // Tag : Relationship
 	string curModelName;  // 当前模型的名称Name
 
 	while (!input.eof())
@@ -485,7 +486,7 @@ void Scene::CompleteModelSetting()
 	}
 }
 
-void Scene::BuildRelationTable( map<string,vector<int>> relationMap )
+void Scene::BuildRelationTable()
 {
 	relationTable=new int*[modelSize];
 	for (int i=0;i<modelSize;i++)
@@ -493,7 +494,7 @@ void Scene::BuildRelationTable( map<string,vector<int>> relationMap )
 
 	memset(relationTable,0,modelSize*modelSize*4);
 	map<string,vector<int>>::iterator it;
-	for (it=relationMap.begin();it!=relationMap.end();it++)
+	for (it=RelationMap.begin();it!=RelationMap.end();it++)
 	{
 		if (it->first=="group")
 		{
@@ -576,16 +577,10 @@ void Scene::BuildRelationTable( map<string,vector<int>> relationMap )
 
 void Scene::DrawScene()
 {
-	point center=bsphere.center;
-	//float scale=50/bsphere.r;
-	//float scale=20;
-	//gluLookAt(0,0,50,0,0,-1,0,1,0);
-	//glScalef(scale,scale,scale);
-	glTranslatef(center[0],center[1],center[2]);
-
 	for (int i=0;i<modelSize;i++)
 	{
-		sceneModels[i]->DrawModel(this);
+		if(sceneModels[i]->visible)
+			sceneModels[i]->DrawModel(this);
 	}
 	glFlush();
 }
@@ -666,63 +661,22 @@ void Scene::DrawSimpleScene()
 	if(Vsize==0)
 		return;
 
-	//ofstream Nout("E:\\an.txt");
-	//ofstream Vout("E:\\av.txt");
-
-	//glTranslatef(-bsphere.center[0],-bsphere.center[1],-bsphere.center[2]);
-
 	glColor3b(255,255,255);
 
 	glBegin(GL_TRIANGLES);
 	for (int i=0;i<faces.size();i++)
 	{
-		//glBegin(GL_POLYGON);
 		Face* face=faces[i];
 		for(int j=0;j<3;j++)
 		{
 			glNormal3f(vnormals[face->vn[j]][0],vnormals[face->vn[j]][1],vnormals[face->vn[j]][2]);
-			//Nout<<vnormals[face->vn[j]][0]<<"\t"<<vnormals[face->vn[j]][1]<<"\t"<<vnormals[face->vn[j]][2]<<"\n";
-			//glNormal3f(1,1,1);
 			glVertex3f(points[face->v[j]][0],points[face->v[j]][1],points[face->v[j]][2]);
-			//Vout<<points[face->v[j]][0]<<"\t"<<points[face->v[j]][1]<<"\t"<<points[face->v[j]][2]<<"\n";
 		}
-		//glEnd();
 	}
 	glEnd();
 	glFlush();
-	//Vout.close();
-	//Nout.close();
 }
 
-void Scene::SetCamera( GLfloat* eye,double scale,double aspect )
-{
-	GLfloat diam=2*bsphere.r;
-	GLfloat zFar=1.0+diam;
-	eye[2]=2*diam;
-	GLfloat left=bsphere.center[0]-diam;
-	GLfloat right=bsphere.center[0]+diam;
-	GLfloat bottom=bsphere.center[1]-diam;
-	GLfloat top=bsphere.center[1]+diam;
-	if (aspect<1.0)
-	{
-		bottom/=aspect;
-		top/=aspect;
-	}
-	else
-	{
-		left*=aspect;
-		right*=aspect;
-	}
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glFrustum(left,right,bottom,top,1.0,zFar);
-	//gluPerspective(50.0*scale,x,1.0,zFar);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	//glTranslatef(-scene->bsphere.center[0],-scene->bsphere.center[1],-scene->bsphere.center[2]);
-	gluLookAt(eye[0],eye[1],eye[2],bsphere.center[0],bsphere.center[1],bsphere.center[2],0.0,1.0,0.0);
-}
 
 
 

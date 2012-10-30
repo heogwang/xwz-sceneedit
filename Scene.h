@@ -56,10 +56,13 @@ public:
 	vector<int> mtlMark; // 与usemtlSlice对应，usemtlSlice[i]~~usemtlSlice[i+1]对应的mtl为：mtlMark[i];
 
 	int modelSize; // 总模型个数，算上墙壁
+	//Byte* mvisible;  // 该模型是否可见
 	vector<Model*> sceneModels; //场景中的模型
+
 
 	int** relationTable;  // 关系表单
 	map<string,int> ModelMap; // Tag : Model_index
+	map<string,vector<int>> RelationMap; // Tag : Relationship
 
 	box bbox; //包围盒
 	BSphere bsphere; // 包围球
@@ -92,11 +95,7 @@ public:
 	// 找到模型的Tag
 	static string FindModelTag(string name);
 	// 建立关系表
-	void BuildRelationTable(map<string,vector<int>> relationMap);
-
-public slots:
-	void SetCamera(GLfloat* eye,double scale,double aspect);
-
+	void BuildRelationTable();
 };
 
 #endif

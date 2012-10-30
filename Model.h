@@ -23,6 +23,7 @@ public:
 	int faceEnd;  // 对应该Object的Face区间的结束的值
 	string name; // 对应物体的名称，表示为Tag0Num
 	string tag; // 对应物体的类别，如：Chair，Desk，etc
+	bool visible; // 对应物体是否绘制到场景中，false则不需要绘制该物体
 
 	// 自定义方法
 public:

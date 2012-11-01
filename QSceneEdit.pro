@@ -68,3 +68,6 @@ HEADERS  += mainwindow.h \
     arcball.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    QSceneEdit.qrc

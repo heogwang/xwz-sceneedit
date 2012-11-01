@@ -1,5 +1,8 @@
 #include "QSceneDisplay.h"
+#include <QMessageBox>
 #include <fstream>
+
+#define BUFFER_LENGTH 64
 const float PI=3.1415926;
 const float speed=PI/180;
 
@@ -11,8 +14,9 @@ QSceneDisplay::QSceneDisplay(QWidget *parent)
 	scene=NULL;
 	up[0]=up[2]=0;
 	up[1]=1;
+	state=0; // 平移物体
+	selectModel=-1;
 }
-
 
 QSceneDisplay::~QSceneDisplay()
 {
@@ -53,9 +57,13 @@ void QSceneDisplay::paintGL()
 
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	glOrtho(plane[0],plane[1],plane[2],plane[3],-10000,10000);
+
 	if(scene==NULL)
 		return;
-	SetCamera();
 
 	DrawScene();
 }
@@ -76,7 +84,7 @@ void QSceneDisplay::resizeGL( int width,int height )
 void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 {
 	QPoint point=event->pos();
-	if (event->buttons() & Qt::LeftButton)
+	if(state==0 && (event->buttons() & Qt::LeftButton))
 	{
 		float dx=float(point.x()-btnDown.x())*(plane[1]-plane[0])/width(); // 转换到视景体移动的距离
 		float dy=float(btnDown.y()-point.y())*(plane[3]-plane[2])/height();
@@ -86,7 +94,7 @@ void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 		plane[3]-=dy;
 		btnDown=point;
 	}
-	else if (event->buttons()&Qt::RightButton)
+	if (event->buttons()&Qt::RightButton)
 	{
 		xangle+=float(point.x()-btnDown.x())*90/width();  // 绕y旋转的角度，角度值
 		yangle+=float(btnDown.y()-point.y())*90/height(); // 绕x轴旋转角度，角度值
@@ -127,6 +135,8 @@ void QSceneDisplay::mousePressEvent(QMouseEvent *event)
 {
 	setMouseTracking(true);
 	btnDown=event->pos();
+	if(state==0 && event->button()==Qt::LeftButton)
+		ProcessSelection(btnDown.x(),btnDown.y());
 }
 
 void QSceneDisplay::wheelEvent(QWheelEvent *event)
@@ -196,22 +206,15 @@ void QSceneDisplay::SetDisScene( Scene* scene )
 	updateGL();
 }
 
-void QSceneDisplay::SetCamera()
+void QSceneDisplay::DrawScene()
 {
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glOrtho(plane[0],plane[1],plane[2],plane[3],-10000,10000);
-	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
 
-}
+	glInitNames();
+	glPushName(0);
 
-void QSceneDisplay::DrawScene()
-{
-	//scene->DrawSimpleScene();
 	// 不绘制场景的墙壁
 	int occurs = -1;
 	map<string, int>::iterator it = scene->ModelMap.find("Wall");
@@ -221,4 +224,60 @@ void QSceneDisplay::DrawScene()
 		scene->sceneModels[occurs]->visible=false;
 	}
 	scene->DrawScene();
+	if (selectModel<0)
+		return;
+	scene->sceneModels[selectModel]->DrawBbox();
+}
+
+void QSceneDisplay::ChooseModelAction()
+{
+	state=0; // 选择模型
+}
+
+void QSceneDisplay::ProcessSelection( int xPos,int yPos )
+{
+	GLfloat aspect;
+	GLuint selectBuff[BUFFER_LENGTH];
+	GLint hits,viewport[4];
+
+	glSelectBuffer(BUFFER_LENGTH,selectBuff);
+	glGetIntegerv(GL_VIEWPORT,viewport);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+
+	glRenderMode(GL_SELECT);
+	glLoadIdentity();
+	gluPickMatrix(xPos,viewport[3]-yPos,2,2,viewport);
+
+	glOrtho(plane[0],plane[1],plane[2],plane[3],-10000,10000);
+
+	DrawScene();
+
+	hits=glRenderMode(GL_RENDER);
+
+	if(hits>=1)
+		ProcessModels(selectBuff);
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void QSceneDisplay::ProcessModels( GLuint *pSelectBuff )
+{
+	int count;
+
+	// 名称堆栈中有多少名字
+	count=pSelectBuff[0]; 
+	// 堆栈的尾部，z值最大的物体
+	selectModel=pSelectBuff[3];
+
+	if (selectModel<0 || selectModel>(scene->modelSize-1))
+	{
+		 QMessageBox::warning(this,tr("SelectObject"),tr("No Object Selected"),QMessageBox::Yes);
+		 selectModel=-1;
+		 return;
+	}
 }

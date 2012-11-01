@@ -69,7 +69,6 @@ public:
 
 
 
-
 	// 主要操作方法
 public:
     bool readScene(const char* filename);

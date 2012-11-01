@@ -382,6 +382,11 @@ void Scene::tess( const vector<int> &thisv,const vector<int> &thisvt,const vecto
 		face->vn[2]=thisvn[2];
 
 		faces.push_back(face);
+
+		sceneModels[sceneModels.size()-1]->pointMap.insert(pair<int,point>(face->v[0],points[face->v[0]]));
+		sceneModels[sceneModels.size()-1]->pointMap.insert(pair<int,point>(face->v[1],points[face->v[1]]));
+		sceneModels[sceneModels.size()-1]->pointMap.insert(pair<int,point>(face->v[2],points[face->v[2]]));
+
 		return;
 	}
 	for(int i=2;i<thisv.size();i++)
@@ -401,6 +406,10 @@ void Scene::tess( const vector<int> &thisv,const vector<int> &thisvt,const vecto
 		face->vn[2]=thisvn[i];
 
 		faces.push_back(face);
+
+		sceneModels[sceneModels.size()-1]->pointMap.insert(pair<int,point>(face->v[0],points[face->v[0]]));
+		sceneModels[sceneModels.size()-1]->pointMap.insert(pair<int,point>(face->v[1],points[face->v[1]]));
+		sceneModels[sceneModels.size()-1]->pointMap.insert(pair<int,point>(face->v[2],points[face->v[2]]));
 	}
 }
 
@@ -480,10 +489,17 @@ std::string Scene::FindModelTag( string name )
 void Scene::CompleteModelSetting()
 {
 	modelSize=sceneModels.size();
-	for (int i=0;i<sceneModels.size()-1;i++)
+	for (int i=0;i<modelSize-1;i++)
 	{
 		sceneModels[i]->faceEnd=sceneModels[i+1]->faceStart;
+		sceneModels[i]->scene=this;
+		sceneModels[i]->need_bbox();
+		sceneModels[i]->need_bsphere();
 	}
+	sceneModels[modelSize-1]->faceEnd=faces.size();
+	sceneModels[modelSize-1]->scene=this;
+	sceneModels[modelSize-1]->need_bbox();
+	sceneModels[modelSize-1]->need_bsphere();
 }
 
 void Scene::BuildRelationTable()
@@ -580,7 +596,7 @@ void Scene::DrawScene()
 	for (int i=0;i<modelSize;i++)
 	{
 		if(sceneModels[i]->visible)
-			sceneModels[i]->DrawModel(this);
+			sceneModels[i]->DrawModel();
 	}
 	glFlush();
 }

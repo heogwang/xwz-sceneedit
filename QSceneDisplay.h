@@ -34,12 +34,11 @@ public:
 	float radius;  // 视线所在球的半径
 	GLfloat plane[4];
 
+	int state; // 指示当前的状态，是平移还是选择物体
+
+	int selectModel;  // 选中的模型的index
+
 	Scene *scene;
-
-
-
-
-
 
 	// 自定义方法
 public:
@@ -48,9 +47,8 @@ public:
 
 
 public slots:
-	void SetCamera();
 	void SetDisScene(Scene* scene);  // 将读入的场景传入过来，方便进行操作
-
+	void ChooseModelAction();  // 响应选择模型Action
 
 signals:
 
@@ -58,13 +56,15 @@ protected:
 	void initializeGL();
 	void paintGL();
 	void resizeGL(int width,int height);
+	void ProcessSelection(int xPos,int yPos);
+	void ProcessModels(GLuint *pSelectBuff);
 
 	// 事件处理
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
     void mousePressEvent(QMouseEvent *event);
-
+	
 
 
 private:

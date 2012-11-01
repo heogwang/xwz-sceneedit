@@ -11,6 +11,9 @@
 #include <QBrush>
 #include <QColor>
 #include <QVariant>
+#include <QAction>
+#include <QMenu>
+#include <QToolBar>
 
 #include "QSceneDisplay.h"
 #include "Scene.h"
@@ -38,6 +41,22 @@ public:
 	QTreeWidget* treeWidget;
 	QList<QTreeWidgetItem *> rootList;
 
+	// 菜单栏
+	QMenu *fileMenu;
+	QMenu *editMenu;
+
+
+
+	// 工具栏
+	QToolBar *fileToolBar;
+	QToolBar *editToolBar;
+
+
+	// 相关操作
+	QAction *openSceneAction;
+	QAction *saveSceneAction;
+	QAction *chooseModelAction;
+
 
     Scene *scene;
 
@@ -48,15 +67,18 @@ public:
 signals:
 	void SetDisScene(Scene* scene); // 将读入的场景指针传入显示界面
 
-
 public slots:
     void OpenSceneFile();
     void SaveSceneFile();
 
-
 private:
     Ui::MainWindow *ui;
+	void CreateDockWidget();
 	void CreateRelationItem(); // 添加QTreeWidget的内容
+	void CreateActions();
+	void CreateMenu();
+	void CreateToolbar();
+	void CreateCentralWidget();
 };
 
 #endif // MAINWINDOW_H

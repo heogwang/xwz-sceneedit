@@ -1,5 +1,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QIcon>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -7,38 +8,21 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    // 界面设定&&部件初始化
-    ui->setupUi(this);
-    sceneDisplayWidget=new QSceneDisplay;
-	treeWidget=new QTreeWidget;
-	treeWidget->setColumnCount(1);
-	treeWidget->setHeaderLabel(tr("Scene Relationship"));
-
-
-	rdocWidget=new QDockWidget;
-	rdocWidget->setObjectName(tr("Scene Relationship"));
-	rdocWidget->setWindowTitle(tr("Scene Relationship"));
-	rdocWidget->setWidget(treeWidget);
-
-	addDockWidget(Qt::RightDockWidgetArea,rdocWidget);
-
-	// 界面内容层次结构
-    hlayout=new QHBoxLayout;
-    hlayout->addWidget(sceneDisplayWidget);
-
-	// 界面主层次结构
-    ui->centralWidget->setLayout(hlayout);
-
 	// 属性设定
+	ui->setupUi(this);
 	scene=NULL;
 
-	// 事件连接
-	
-    connect(ui->openFileAction,SIGNAL(triggered()),this,SLOT(OpenSceneFile()));
-    connect(ui->saveFileAction,SIGNAL(triggered()),this,SLOT(SaveSceneFile()));
+	CreateCentralWidget();
+	CreateDockWidget();
+	CreateActions();
+	CreateMenu();
+	CreateToolbar();
 
-	 // sceneDisplayWidget
+	// 事件连接
+
+	// sceneDisplayWidget
 	connect(this,SIGNAL(SetDisScene(Scene*)),sceneDisplayWidget,SLOT(SetDisScene(Scene*)));
+	//connect(this,SIGNAL(SetChooseMode()),sceneDisplayWidget,SLOT(ChooseModelAction()));
 }
 
 MainWindow::~MainWindow()
@@ -129,4 +113,66 @@ void MainWindow::CreateRelationItem()
 	treeWidget->insertTopLevelItems(0,rootList);
 	//treeWidget->expandAll(); //全部展开
 }
+
+void MainWindow::CreateActions()
+{
+    openSceneAction=new QAction(QIcon(":/image/open.png"),tr("打开场景"),this);
+    connect(openSceneAction,SIGNAL(triggered()),this,SLOT(OpenSceneFile()));
+
+    saveSceneAction=new QAction(QIcon(":/image/save.png"),tr("保存场景"),this);
+    connect(saveSceneAction,SIGNAL(triggered()),this,SLOT(SaveSceneFile()));
+
+	chooseModelAction=new QAction(QIcon(":/image/choose.png"),tr("选择物体"),this);
+	connect(chooseModelAction,SIGNAL(triggered()),sceneDisplayWidget,SLOT(ChooseModelAction()));
+}
+
+void MainWindow::CreateMenu()
+{
+	fileMenu=ui->menuBar->addMenu(tr("文件"));
+	fileMenu->addAction(openSceneAction);
+	fileMenu->addAction(saveSceneAction);
+
+	editMenu=ui->menuBar->addMenu(tr("编辑"));
+	editMenu->addAction(chooseModelAction);
+}
+
+void MainWindow::CreateToolbar()
+{
+	fileToolBar=addToolBar(tr("文件"));
+	fileToolBar->addAction(openSceneAction);
+	fileToolBar->addAction(saveSceneAction);
+
+	editToolBar=addToolBar(tr("编辑"));
+	editToolBar->addAction(chooseModelAction);
+}
+
+void MainWindow::CreateDockWidget()
+{
+	// 树形结构
+	treeWidget=new QTreeWidget;
+	treeWidget->setColumnCount(1);
+	treeWidget->setHeaderLabel(tr("Scene Relationship"));
+
+	// 停靠栏
+	rdocWidget=new QDockWidget;
+	rdocWidget->setObjectName(tr("Scene Relationship"));
+	rdocWidget->setWindowTitle(tr("Scene Relationship"));
+	rdocWidget->setWidget(treeWidget);
+
+	addDockWidget(Qt::RightDockWidgetArea,rdocWidget);
+}
+
+void MainWindow::CreateCentralWidget()
+{
+	// 界面设定&&部件初始化
+	sceneDisplayWidget=new QSceneDisplay;
+
+	// 界面内容层次结构
+	hlayout=new QHBoxLayout;
+	hlayout->addWidget(sceneDisplayWidget);
+
+	// 界面主层次结构
+	ui->centralWidget->setLayout(hlayout);
+}
+
 

@@ -33,8 +33,15 @@ public:
 	vec up; // 向上的方向
 	float radius;  // 视线所在球的半径
 	GLfloat plane[4];
-
+	/*
+	0: 默认状态，可以对场景进行物体拾取，平移，旋转，缩放
+	1: 平移场景
+	2: 旋转场景
+	3: 平移物体
+	4: 旋转物体
+	*/
 	int state; // 指示当前的状态，是平移还是选择物体
+
 
 	int selectModel;  // 选中的模型的index
 
@@ -44,11 +51,13 @@ public:
 public:
 	void DrawCoodinates();
 	void DrawScene();
-
+	bool isSelectedModelValid();
 
 public slots:
 	void SetDisScene(Scene* scene);  // 将读入的场景传入过来，方便进行操作
 	void ChooseModelAction();  // 响应选择模型Action
+	void TransModelAction();
+	void RotateModelAction();
 
 signals:
 

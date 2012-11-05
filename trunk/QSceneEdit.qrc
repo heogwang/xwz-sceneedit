@@ -3,5 +3,9 @@
         <file>image/open.png</file>
         <file>image/save.png</file>
         <file>image/choose.png</file>
+      <file>image/obj_trans.png</file>
+      <file>image/trans.png</file>
+      <file>image/rotate.png</file>
+      <file>image/obj_rotate.png</file>
     </qresource>
 </RCC>

@@ -64,6 +64,7 @@ void QSceneDisplay::paintGL()
 
 	if(scene==NULL)
 		return;
+	gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
 
 	DrawScene();
 }
@@ -83,18 +84,33 @@ void QSceneDisplay::resizeGL( int width,int height )
 
 void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 {
+	if(scene==NULL)
+		return;
 	QPoint point=event->pos();
-	if(state==0 && (event->buttons() & Qt::LeftButton))
+	if (event->buttons() & Qt::LeftButton)
 	{
-		float dx=float(point.x()-btnDown.x())*(plane[1]-plane[0])/width(); // 转换到视景体移动的距离
-		float dy=float(btnDown.y()-point.y())*(plane[3]-plane[2])/height();
-		plane[0]-=dx;
-		plane[1]-=dx;
-		plane[2]-=dy;
-		plane[3]-=dy;
-		btnDown=point;
+		if(state==0)
+		{
+			float dx=float(point.x()-btnDown.x())*(plane[1]-plane[0])/width(); // 转换到视景体移动的距离
+			float dy=float(btnDown.y()-point.y())*(plane[3]-plane[2])/height();
+			plane[0]-=dx;
+			plane[1]-=dx;
+			plane[2]-=dy;
+			plane[3]-=dy;
+			btnDown=point;
+		}
+		else if (state==3 && isSelectedModelValid())
+		{
+			int invert_y=height()-point.y();
+			scene->sceneModels[selectModel]->ball.arcball_tranMove(point.x(),invert_y);
+		}
+		else if(state==4 && isSelectedModelValid())
+		{
+			int invert_y=height()-point.y();
+			scene->sceneModels[selectModel]->ball.arcball_rotMove(point.x(),invert_y);
+		}
 	}
-	if (event->buttons()&Qt::RightButton)
+	else if (event->buttons()&Qt::RightButton)
 	{
 		xangle+=float(point.x()-btnDown.x())*90/width();  // 绕y旋转的角度，角度值
 		yangle+=float(btnDown.y()-point.y())*90/height(); // 绕x轴旋转角度，角度值
@@ -133,10 +149,25 @@ void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 
 void QSceneDisplay::mousePressEvent(QMouseEvent *event)
 {
+	if(scene==NULL)
+		return;
 	setMouseTracking(true);
 	btnDown=event->pos();
-	if(state==0 && event->button()==Qt::LeftButton)
-		ProcessSelection(btnDown.x(),btnDown.y());
+	if (event->button()==Qt::LeftButton)
+	{
+		if (state==0)
+			ProcessSelection(btnDown.x(),btnDown.y());
+		else if (state==3 && isSelectedModelValid())
+		{
+			int invert_y=height()-btnDown.y();
+			scene->sceneModels[selectModel]->ball.arcball_tranStart(btnDown.x(),invert_y);
+		}
+		else if (state==4 && isSelectedModelValid())
+		{
+			int invert_y=height()-btnDown.y();
+			scene->sceneModels[selectModel]->ball.arcball_rotStart(btnDown.x(),invert_y);
+		}
+	}
 }
 
 void QSceneDisplay::wheelEvent(QWheelEvent *event)
@@ -210,7 +241,9 @@ void QSceneDisplay::DrawScene()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
+	//gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
+	if(state>2 && isSelectedModelValid())
+		scene->sceneModels[selectModel]->ball.arcball_setzoom(width()/2,eye,up);
 
 	glInitNames();
 	glPushName(0);
@@ -251,6 +284,7 @@ void QSceneDisplay::ProcessSelection( int xPos,int yPos )
 	gluPickMatrix(xPos,viewport[3]-yPos,2,2,viewport);
 
 	glOrtho(plane[0],plane[1],plane[2],plane[3],-10000,10000);
+	gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
 
 	DrawScene();
 
@@ -274,10 +308,29 @@ void QSceneDisplay::ProcessModels( GLuint *pSelectBuff )
 	// 堆栈的尾部，z值最大的物体
 	selectModel=pSelectBuff[3];
 
-	if (selectModel<0 || selectModel>(scene->modelSize-1))
+	if (!isSelectedModelValid())
 	{
 		 QMessageBox::warning(this,tr("SelectObject"),tr("No Object Selected"),QMessageBox::Yes);
 		 selectModel=-1;
 		 return;
 	}
+
+
+}
+
+void QSceneDisplay::TransModelAction()
+{
+	state=3;
+}
+
+void QSceneDisplay::RotateModelAction()
+{
+	state=4;
+}
+
+bool QSceneDisplay::isSelectedModelValid()
+{
+	if (selectModel<0 || selectModel>(scene->modelSize-1))
+		return false;
+	return true;
 }

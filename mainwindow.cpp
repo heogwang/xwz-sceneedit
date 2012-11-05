@@ -124,6 +124,18 @@ void MainWindow::CreateActions()
 
 	chooseModelAction=new QAction(QIcon(":/image/choose.png"),tr("选择物体"),this);
 	connect(chooseModelAction,SIGNAL(triggered()),sceneDisplayWidget,SLOT(ChooseModelAction()));
+
+	transModelAction=new QAction(QIcon(":/image/obj_trans.png"),tr("平移物体"),this);
+	connect(transModelAction,SIGNAL(triggered()),sceneDisplayWidget,SLOT(TransModelAction()));
+	
+	rotateModelAction=new QAction(QIcon(":/image/obj_rotate.png"),tr("旋转物体"),this);
+	connect(rotateModelAction,SIGNAL(triggered()),sceneDisplayWidget,SLOT(RotateModelAction()));
+
+	transSceneAction=new QAction(QIcon(":/image/trans.png"),tr("平移场景"),this);
+	connect(transSceneAction,SIGNAL(triggered()),sceneDisplayWidget,SLOT(ChooseModelAction()));
+
+	rotateSceneAction=new QAction(QIcon(":/image/rotate.png"),tr("旋转场景"),this);
+	connect(rotateSceneAction,SIGNAL(triggered()),sceneDisplayWidget,SLOT(ChooseModelAction()));
 }
 
 void MainWindow::CreateMenu()
@@ -132,8 +144,15 @@ void MainWindow::CreateMenu()
 	fileMenu->addAction(openSceneAction);
 	fileMenu->addAction(saveSceneAction);
 
-	editMenu=ui->menuBar->addMenu(tr("编辑"));
-	editMenu->addAction(chooseModelAction);
+	modelEditMenu=ui->menuBar->addMenu(tr("模型编辑"));
+	modelEditMenu->addAction(chooseModelAction);
+	modelEditMenu->addAction(transModelAction);
+	modelEditMenu->addAction(rotateModelAction);
+
+	sceneEditMenu=ui->menuBar->addMenu(tr("场景编辑"));
+	sceneEditMenu->addAction(transSceneAction);
+	sceneEditMenu->addAction(rotateSceneAction);
+
 }
 
 void MainWindow::CreateToolbar()
@@ -142,8 +161,14 @@ void MainWindow::CreateToolbar()
 	fileToolBar->addAction(openSceneAction);
 	fileToolBar->addAction(saveSceneAction);
 
-	editToolBar=addToolBar(tr("编辑"));
-	editToolBar->addAction(chooseModelAction);
+	editModelToolBar=addToolBar(tr("模型编辑"));
+	editModelToolBar->addAction(chooseModelAction);
+	editModelToolBar->addAction(transModelAction);
+	editModelToolBar->addAction(rotateModelAction);
+
+	editSceneToolBar=addToolBar(tr("场景编辑"));
+	editSceneToolBar->addAction(transSceneAction);
+	editSceneToolBar->addAction(rotateSceneAction);
 }
 
 void MainWindow::CreateDockWidget()

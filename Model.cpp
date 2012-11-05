@@ -1,12 +1,9 @@
 #include "Model.h"
-//#include "gl/GL.h"
-//#include "gl/GLU.h"
 
 Model::Model(void)
 {
 	visible=true;
 }
-
 
 Model::~Model(void)
 {
@@ -15,6 +12,7 @@ Model::~Model(void)
 void Model::DrawModel()
 {
 	// loadÃû³Æ£¬·½±ãÊ°È¡
+	ball.arcball_multiMatrix();
 	glLoadName(scene->ModelMap[this->name]);
 	glColor3b(255,0,0);
 	glBegin(GL_TRIANGLES);

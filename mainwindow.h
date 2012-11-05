@@ -43,20 +43,28 @@ public:
 
 	// 菜单栏
 	QMenu *fileMenu;
-	QMenu *editMenu;
-
+	QMenu *modelEditMenu;
+	QMenu *sceneEditMenu;
 
 
 	// 工具栏
 	QToolBar *fileToolBar;
-	QToolBar *editToolBar;
+	QToolBar *editModelToolBar;
+	QToolBar *editSceneToolBar;
 
 
 	// 相关操作
 	QAction *openSceneAction;
 	QAction *saveSceneAction;
-	QAction *chooseModelAction;
 
+	QAction *chooseModelAction;
+	QAction *transModelAction;
+	QAction *rotateModelAction;
+	QAction *scaleModelAction;
+
+	QAction *transSceneAction;
+	QAction *rotateSceneAction;
+	QAction *scaleSceneAction;
 
     Scene *scene;
 

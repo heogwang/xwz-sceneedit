@@ -99,7 +99,7 @@ public:
 	static void quatidentity(GLfloat* q);
 	static void quatidentity(GLdouble* q);
 	static void quaternion(GLfloat* q, GLfloat x, GLfloat y, GLfloat z, GLfloat w,vec center);
-	static void quatscale(GLfloat* q, GLfloat x,GLfloat y,GLfloat z);
+	static void quatscale(GLfloat* dest, GLfloat x,GLfloat y,GLfloat z);
 	static void quattrans(GLfloat* dest, GLfloat x, GLfloat y, GLfloat z);
 	static void quatcopy(GLfloat* dst, GLfloat* src);
 	static void quatnext(GLfloat* dest, GLfloat* left, GLfloat* right);

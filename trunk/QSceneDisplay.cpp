@@ -16,11 +16,16 @@ QSceneDisplay::QSceneDisplay(QWidget *parent)
 	up[1]=1;
 	state=0; // 平移物体
 	selectModel=-1;
+	glProjectionM=new GLdouble[16];
+	glModelM=new GLdouble[16];
+	glViewM=new int[4];
 }
 
 QSceneDisplay::~QSceneDisplay()
 {
-
+	delete []glProjectionM;
+	delete []glModelM;
+	delete []glViewM;
 }
 
 void QSceneDisplay::initializeGL()
@@ -97,17 +102,25 @@ void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 			plane[1]-=dx;
 			plane[2]-=dy;
 			plane[3]-=dy;
-			btnDown=point;
+			//btnDown=point;
 		}
 		else if (state==3 && isSelectedModelValid())
 		{
-			int invert_y=height()-point.y();
-			scene->sceneModels[selectModel]->ball.arcball_tranMove(point.x(),invert_y);
+			GLdouble ax,ay,az,bx,by,bz;
+			int invert_y=height()-btnDown.y();
+			gluUnProject(btnDown.x(),invert_y,0,glModelM,glProjectionM,glViewM,&ax,&ay,&az); // 找到坐标系中点
+			invert_y=height()-point.y();
+			gluUnProject(point.x(),invert_y,0,glModelM,glProjectionM,glViewM,&bx,&by,&bz); // 找到坐标系中点
+			Model* model=scene->sceneModels[selectModel];
+			model->tx+=bx-ax;
+			model->ty+=by-ay;
+			model->tz+=bz-az;
 		}
 		else if(state==4 && isSelectedModelValid())
 		{
-			int invert_y=height()-point.y();
-			scene->sceneModels[selectModel]->ball.arcball_rotMove(point.x(),invert_y);
+			Model* model=scene->sceneModels[selectModel];
+			model->xangle+=double(point.y()-btnDown.y())/3.6;
+			model->yangle+=double(point.x()-btnDown.x())/3.6;
 		}
 	}
 	else if (event->buttons()&Qt::RightButton)
@@ -141,9 +154,9 @@ void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 
 		eye=scene->bsphere.center+radius*eye;
 
-		btnDown=point;
+		//btnDown=point;
 	}
-
+	btnDown=point;
     this->updateGL();
 }
 
@@ -157,16 +170,16 @@ void QSceneDisplay::mousePressEvent(QMouseEvent *event)
 	{
 		if (state==0)
 			ProcessSelection(btnDown.x(),btnDown.y());
-		else if (state==3 && isSelectedModelValid())
-		{
-			int invert_y=height()-btnDown.y();
-			scene->sceneModels[selectModel]->ball.arcball_tranStart(btnDown.x(),invert_y);
-		}
-		else if (state==4 && isSelectedModelValid())
-		{
-			int invert_y=height()-btnDown.y();
-			scene->sceneModels[selectModel]->ball.arcball_rotStart(btnDown.x(),invert_y);
-		}
+		//else if (state==3 && isSelectedModelValid())
+		//{
+		//	int invert_y=height()-btnDown.y();
+		//	scene->sceneModels[selectModel]->ball.arcball_tranStart(btnDown.x(),invert_y);
+		//}
+		//else if (state==4 && isSelectedModelValid())
+		//{
+		//	int invert_y=height()-btnDown.y();
+		//	scene->sceneModels[selectModel]->ball.arcball_rotStart(btnDown.x(),invert_y);
+		//}
 	}
 }
 
@@ -243,7 +256,7 @@ void QSceneDisplay::DrawScene()
 	glLoadIdentity();
 	//gluLookAt(eye[0],eye[1],eye[2],scene->bsphere.center[0],scene->bsphere.center[1],scene->bsphere.center[2],up[0],up[1],up[2]);
 	if(state>2 && isSelectedModelValid())
-		scene->sceneModels[selectModel]->ball.arcball_setzoom(width()/2,eye,up);
+		SetProjectionModelView();
 
 	glInitNames();
 	glPushName(0);
@@ -333,4 +346,11 @@ bool QSceneDisplay::isSelectedModelValid()
 	if (selectModel<0 || selectModel>(scene->modelSize-1))
 		return false;
 	return true;
+}
+
+void QSceneDisplay::SetProjectionModelView()
+{
+	glGetDoublev(GL_PROJECTION_MATRIX,glProjectionM);
+	glGetDoublev(GL_MODELVIEW_MATRIX,glModelM);
+	glGetIntegerv(GL_VIEWPORT,glViewM);
 }

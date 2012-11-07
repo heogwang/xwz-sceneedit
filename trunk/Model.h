@@ -35,6 +35,17 @@ public:
 	box bbox; //包围盒
 	BSphere bsphere; //包围球
 
+	GLfloat tx; // translate的x
+	GLdouble ty; // translate的y
+	GLdouble tz; // translate的z
+
+	GLdouble scale; // 缩放大小
+
+	GLdouble xangle;  // 绕x的角度
+	GLdouble yangle;  // 绕y的角度
+
+	GLdouble *ModelMatrix; // 模型矩阵
+
 	arcball ball; // 每个物体的旋转球，包含了对应的变换矩阵，作为保存物体的时候，坐标变换的矩阵
 	// 自定义方法
 public:

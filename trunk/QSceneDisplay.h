@@ -47,11 +47,16 @@ public:
 
 	Scene *scene;
 
+	GLdouble *glProjectionM;  // Projection Matrix
+	GLdouble *glModelM; // Model Matrix
+	int *glViewM;   // viewport
+
 	// 自定义方法
 public:
 	void DrawCoodinates();
 	void DrawScene();
 	bool isSelectedModelValid();
+	void SetProjectionModelView();
 
 public slots:
 	void SetDisScene(Scene* scene);  // 将读入的场景传入过来，方便进行操作

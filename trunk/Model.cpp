@@ -3,16 +3,25 @@
 Model::Model(void)
 {
 	visible=true;
+	ModelMatrix=new GLdouble[16];
+	scale=1.0;
+	xangle=yangle=0.0;
 }
 
 Model::~Model(void)
 {
+	delete []ModelMatrix;
 }
 
 void Model::DrawModel()
 {
+	glPushMatrix();
+	glTranslated(tx,ty,tz);
+	glRotated(yangle,0.0,1.0,0.0);
+	glRotated(xangle,1.0,0.0,0.0);
+	glScalef(scale,scale,scale);
+	glTranslatef(-bsphere.center[0],-bsphere.center[1],-bsphere.center[2]);
 	// loadÃû³Æ£¬·½±ãÊ°È¡
-	ball.arcball_multiMatrix();
 	glLoadName(scene->ModelMap[this->name]);
 	glColor3b(255,0,0);
 	glBegin(GL_TRIANGLES);
@@ -26,6 +35,7 @@ void Model::DrawModel()
 		}
 	}
 	glEnd();
+	glPopMatrix();
 	glFlush();
 }
 

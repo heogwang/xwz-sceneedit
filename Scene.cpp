@@ -495,13 +495,19 @@ void Scene::CompleteModelSetting()
 		sceneModels[i]->scene=this;
 		sceneModels[i]->need_bbox();
 		sceneModels[i]->need_bsphere();
-		sceneModels[i]->ball.arcball_setCenter(sceneModels[i]->bsphere.center);
+		sceneModels[i]->tx=sceneModels[i]->bsphere.center[0];
+		sceneModels[i]->ty=sceneModels[i]->bsphere.center[1];
+		sceneModels[i]->tz=sceneModels[i]->bsphere.center[2];
+		//sceneModels[i]->ball.arcball_setCenter(sceneModels[i]->bsphere.center);
 	}
 	sceneModels[modelSize-1]->faceEnd=faces.size();
 	sceneModels[modelSize-1]->scene=this;
 	sceneModels[modelSize-1]->need_bbox();
 	sceneModels[modelSize-1]->need_bsphere();
-	sceneModels[modelSize-1]->ball.arcball_setCenter(sceneModels[modelSize-1]->bsphere.center);
+	sceneModels[modelSize-1]->tx=sceneModels[modelSize-1]->bsphere.center[0];
+	sceneModels[modelSize-1]->ty=sceneModels[modelSize-1]->bsphere.center[1];
+	sceneModels[modelSize-1]->tz=sceneModels[modelSize-1]->bsphere.center[2];
+	//sceneModels[modelSize-1]->ball.arcball_setCenter(sceneModels[modelSize-1]->bsphere.center);
 }
 
 void Scene::BuildRelationTable()
@@ -597,10 +603,8 @@ void Scene::DrawScene()
 {
 	for (int i=0;i<modelSize;i++)
 	{
-		glPushMatrix();
 		if(sceneModels[i]->visible)
 			sceneModels[i]->DrawModel();
-		glPopMatrix();
 	}
 	glFlush();
 }

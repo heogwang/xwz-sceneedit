@@ -247,10 +247,25 @@
     <CustomBuild Include="QSceneEdit.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
+    <None Include="image\choose.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="image\obj_rotate.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="image\obj_trans.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="image\open.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="image\rotate.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="image\save.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="image\trans.png">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

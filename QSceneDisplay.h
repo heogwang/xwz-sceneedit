@@ -9,7 +9,6 @@
 #include "gl/glut.h"
 #include "trimesh/Vec.h"
 #include "Scene.h"
-#include "arcball.h"
 
 namespace Ui {
 	class QSceneDisplay;
@@ -39,6 +38,7 @@ public:
 	2: 旋转场景
 	3: 平移物体
 	4: 旋转物体
+	5: 缩放物体
 	*/
 	int state; // 指示当前的状态，是平移还是选择物体
 

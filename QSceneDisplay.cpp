@@ -168,8 +168,8 @@ void QSceneDisplay::mousePressEvent(QMouseEvent *event)
 	btnDown=event->pos();
 	if (event->button()==Qt::LeftButton)
 	{
-		if (state==0)
-			ProcessSelection(btnDown.x(),btnDown.y());
+		//if (state==0)
+		ProcessSelection(btnDown.x(),btnDown.y());
 		//else if (state==3 && isSelectedModelValid())
 		//{
 		//	int invert_y=height()-btnDown.y();
@@ -313,8 +313,13 @@ void QSceneDisplay::ProcessSelection( int xPos,int yPos )
 
 	hits=glRenderMode(GL_RENDER);
 
-	if(hits>=1)
+	if(hits>0)
 		ProcessModels(selectBuff);
+	else
+	{
+		 selectModel=-1;
+		 updateGL();
+	}
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
@@ -335,6 +340,7 @@ void QSceneDisplay::ProcessModels( GLuint *pSelectBuff )
 	{
 		 QMessageBox::warning(this,tr("SelectObject"),tr("No Object Selected"),QMessageBox::Yes);
 		 selectModel=-1;
+		 updateGL();
 		 return;
 	}
 

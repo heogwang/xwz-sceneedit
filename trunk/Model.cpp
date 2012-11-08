@@ -21,6 +21,8 @@ void Model::DrawModel()
 	glRotated(xangle,1.0,0.0,0.0);
 	glScalef(scale,scale,scale);
 	glTranslatef(-bsphere.center[0],-bsphere.center[1],-bsphere.center[2]);
+
+	glGetDoublev(GL_MODELVIEW_MATRIX,ModelMatrix);
 	// load名称，方便拾取
 	glLoadName(scene->ModelMap[this->name]);
 	glColor3b(255,0,0);
@@ -43,9 +45,7 @@ void Model::need_bbox()
 {
 	if(pointMap.size()==0) //没有面片
 		return;
-	//for (int i=faceStart;i<faceEnd;i++)
-	//	for(int j=0;j<3;j++)
-	//		bbox+=scene->points[scene->faces[i]->v[j]];
+	
 	map<int,point>::iterator it;
 	for(it=pointMap.begin();it!=pointMap.end();it++)
 		bbox+=it->second;
@@ -73,6 +73,9 @@ void Model::need_bsphere()
 
 void Model::DrawBbox()
 {
+	glPushMatrix();
+
+	glMultMatrixd(ModelMatrix);
 	glColor3f(1.0,0,0);
 	glBegin(GL_LINE_STRIP);
 	glVertex3f(bbox.min[0],bbox.max[1],bbox.min[2]);
@@ -105,4 +108,5 @@ void Model::DrawBbox()
 	glVertex3f(bbox.min[0],bbox.max[1],bbox.max[2]);
 	glVertex3f(bbox.min[0],bbox.max[1],bbox.min[2]);
 	glEnd();
+	glPopMatrix();
 }

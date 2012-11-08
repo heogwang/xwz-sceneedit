@@ -185,18 +185,28 @@ void QSceneDisplay::mousePressEvent(QMouseEvent *event)
 
 void QSceneDisplay::wheelEvent(QWheelEvent *event)
 {
-	double numDegrees = -event->delta() / 8.0;
-	double numSteps = numDegrees / 15.0;
-	scale = pow(1.125, numSteps);
-	double width=(plane[1]-plane[0])*scale;
-	double height=(plane[3]-plane[2])*scale;
-	double centerx=(plane[0]+plane[1])/2;
-	double centery=(plane[3]+plane[2])/2;
+	if (state==0)
+	{
+		double numDegrees = -event->delta() / 8.0;
+		double numSteps = numDegrees / 15.0;
+		scale = pow(1.125, numSteps);
+		double width=(plane[1]-plane[0])*scale;
+		double height=(plane[3]-plane[2])*scale;
+		double centerx=(plane[0]+plane[1])/2;
+		double centery=(plane[3]+plane[2])/2;
 
-	plane[0]=centerx-width/2;
-	plane[1]=centerx+width/2;
-	plane[2]=centery-height/2;
-	plane[3]=centery+height/2;
+		plane[0]=centerx-width/2;
+		plane[1]=centerx+width/2;
+		plane[2]=centery-height/2;
+		plane[3]=centery+height/2;
+	}
+	else if (state>2 && isSelectedModelValid())
+	{
+		double numDegrees = event->delta() / 8.0;
+		double numSteps = numDegrees / 15.0;
+		scene->sceneModels[selectModel]->scale *=pow(1.125, numSteps);;
+		//scene->sceneModels[selectModel]->scale+=event->delta()/100;
+	}
 	this->updateGL();
 }
 

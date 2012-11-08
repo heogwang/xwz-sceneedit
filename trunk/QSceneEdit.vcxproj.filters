@@ -95,9 +95,6 @@
     <ClCompile Include="trimesh\TriMesh_tstrips.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="arcball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="trimesh\conn_comps.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -184,9 +181,6 @@
     <ClInclude Include="trimesh\XForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="arcball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="trimesh\bsphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -248,6 +242,9 @@
       <Filter>Resource Files</Filter>
     </CustomBuild>
     <None Include="image\choose.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="conference_room26\conference_room26.obj">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="image\obj_rotate.png">

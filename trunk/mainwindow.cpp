@@ -37,7 +37,7 @@ void MainWindow::OpenSceneFile()
 
 	scene=new Scene;
     //QString fileName=QFileDialog::getOpenFileName(this,tr("Open Scene File"),".",tr("obj file(*.obj)"));
-    QString fileName="E:\\QtProjects\\QSceneEdit\\conference_room26\\conference_room26.obj";
+    QString fileName="F:\\QSceneEdit\\conference_room26\\conference_room26.obj";
     bool flag=scene->readScene(fileName.toStdString().c_str());
     if(!flag)
         QMessageBox::warning(this,tr("ReadScene"),tr("Open Scene File Error"),QMessageBox::Yes);

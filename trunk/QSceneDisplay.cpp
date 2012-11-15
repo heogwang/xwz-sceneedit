@@ -119,7 +119,7 @@ void QSceneDisplay::mouseMoveEvent(QMouseEvent *event)
 		else if(state==4 && isSelectedModelValid())
 		{
 			Model* model=scene->sceneModels[selectModel];
-			model->xangle+=double(point.y()-btnDown.y())/3.6;
+			model->xangle-=double(point.y()-btnDown.y())/3.6;
 			model->yangle+=double(point.x()-btnDown.x())/3.6;
 		}
 	}
@@ -168,8 +168,8 @@ void QSceneDisplay::mousePressEvent(QMouseEvent *event)
 	btnDown=event->pos();
 	if (event->button()==Qt::LeftButton)
 	{
-		//if (state==0)
-		ProcessSelection(btnDown.x(),btnDown.y());
+		if (state==0)
+			ProcessSelection(btnDown.x(),btnDown.y());
 		//else if (state==3 && isSelectedModelValid())
 		//{
 		//	int invert_y=height()-btnDown.y();

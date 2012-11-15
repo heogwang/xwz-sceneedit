@@ -7,6 +7,5 @@
         <file>image/trans.png</file>
         <file>image/rotate.png</file>
         <file>image/obj_rotate.png</file>
-        <file>conference_room26/conference_room26.obj</file>
     </qresource>
 </RCC>

@@ -8,6 +8,8 @@
 #include "trimesh/Box.h"
 #include "trimesh/bsphere.h"
 #include <map>
+#include "mersenne-twister.h"
+#include <time.h>
 
 using namespace std;
 /*
@@ -46,12 +48,20 @@ public:
 	GLdouble *ModelMatrix; // 模型矩阵
 
     //arcball ball; // 每个物体的旋转球，包含了对应的变换矩阵，作为保存物体的时候，坐标变换的矩阵
+
+	GLfloat *faceAreaSum;
+	point *samplePoints;
+	int pointNumber;
+	bool test;
 	// 自定义方法
 public:
 	void DrawModel();
 	void need_bbox();
 	void need_bsphere();
 	void DrawBbox();
+	void CalculateArea();
+	void GeneratePoints(int total);
+	void DrawPoints();
 };
 
 #endif

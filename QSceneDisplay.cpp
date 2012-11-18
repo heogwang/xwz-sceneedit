@@ -317,7 +317,7 @@ void QSceneDisplay::ProcessSelection( int xPos,int yPos )
 		ProcessModels(selectBuff);
 	else
 	{
-		 selectModel=-1;
+		selectModel=-1;
 		 updateGL();
 	}
 
@@ -333,7 +333,7 @@ void QSceneDisplay::ProcessModels( GLuint *pSelectBuff )
 
 	// 名称堆栈中有多少名字
 	count=pSelectBuff[0]; 
-	// 堆栈的尾部，z值最大的物体
+	// 堆栈的尾部，z值最大的物体 
 	selectModel=pSelectBuff[3];
 
 	if (!isSelectedModelValid())

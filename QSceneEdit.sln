@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QSceneEdit", "QSceneEdit.vcxproj", "{150BEA55-7EBD-32CC-A93C-7817D65E603B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{150BEA55-7EBD-32CC-A93C-7817D65E603B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{150BEA55-7EBD-32CC-A93C-7817D65E603B}.Debug|Win32.Build.0 = Debug|Win32
+		{150BEA55-7EBD-32CC-A93C-7817D65E603B}.Release|Win32.ActiveCfg = Release|Win32
+		{150BEA55-7EBD-32CC-A93C-7817D65E603B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

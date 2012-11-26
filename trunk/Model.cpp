@@ -247,6 +247,9 @@ void Model::SaveSceneModel()
 {
 	string dir=scene->dirPath+name+".obj";
 	ofstream out(dir);
+	
+	out<<"# Alias OBJ Model File\n";
+	
 	vector<Face*> &faces=scene->faces;
 	point* points=scene->points;
 	vnormal *vnormals=scene->vnormals;

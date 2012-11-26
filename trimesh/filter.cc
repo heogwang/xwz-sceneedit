@@ -464,7 +464,6 @@ void orient(TriMesh *mesh)
 	dprintf("Done.\n");
 }
 
-
 // Remove boundary vertices (and faces that touch them)
 void erode(TriMesh *mesh)
 {

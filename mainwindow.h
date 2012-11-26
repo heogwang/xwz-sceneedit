@@ -87,6 +87,7 @@ private:
 	void CreateMenu();
 	void CreateToolbar();
 	void CreateCentralWidget();
+	void ClearTreeWidget(QTreeWidget *treeWidget);
 };
 
 #endif // MAINWINDOW_H

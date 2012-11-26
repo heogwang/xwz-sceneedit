@@ -35,9 +35,14 @@ void MainWindow::OpenSceneFile()
 	if(scene!=NULL)
 		delete scene;
 
+	//QString fileName=QFileDialog::getOpenFileName(this,tr("Open Scene File"),".",tr("obj file(*.obj)"));
+	//Model model;
+	//model.ReadModel(fileName.toStdString());
+	//model.PCAOperation();
+
 	scene=new Scene;
     QString fileName=QFileDialog::getOpenFileName(this,tr("Open Scene File"),".",tr("obj file(*.obj)"));
-    //QString fileName="D:\\geometry\\QSceneEdit\\conference_room26\\conference_room26.obj";
+    //QString fileName="F:/QSceneEdit/conference_room26/conference_room26.obj";
     bool flag=scene->readScene(fileName.toStdString().c_str());
     if(!flag)
         QMessageBox::warning(this,tr("ReadScene"),tr("Open Scene File Error"),QMessageBox::Yes);
@@ -48,11 +53,12 @@ void MainWindow::OpenSceneFile()
 
 void MainWindow::SaveSceneFile()
 {
-
+	scene->SaveScene();
 }
 
 void MainWindow::CreateRelationItem()
 {
+	ClearTreeWidget(treeWidget);
 	rootList.clear();
 	map<string,vector<int>>::iterator it;
 	QString strQ;
@@ -198,6 +204,22 @@ void MainWindow::CreateCentralWidget()
 
 	// 界面主层次结构
 	ui->centralWidget->setLayout(hlayout);
+}
+
+void MainWindow::ClearTreeWidget( QTreeWidget *treeWidget )
+{
+	while ( treeWidget->topLevelItemCount() > 0 )
+	{
+		QTreeWidgetItem *parentItem = treeWidget->takeTopLevelItem(0);
+		QList<QTreeWidgetItem *> list = parentItem->takeChildren ();
+
+		for (int j = 0; j < list.size(); j++)
+		{
+			QTreeWidgetItem *childItem = list.at(j);
+			delete childItem;
+		}
+		delete parentItem;
+	}
 }
 
 

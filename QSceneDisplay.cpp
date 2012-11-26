@@ -204,7 +204,7 @@ void QSceneDisplay::wheelEvent(QWheelEvent *event)
 	{
 		double numDegrees = event->delta() / 8.0;
 		double numSteps = numDegrees / 15.0;
-		scene->sceneModels[selectModel]->scale *=pow(1.125, numSteps);;
+		scene->sceneModels[selectModel]->scaled *=pow(1.125, numSteps);;
 		//scene->sceneModels[selectModel]->scale+=event->delta()/100;
 	}
 	this->updateGL();

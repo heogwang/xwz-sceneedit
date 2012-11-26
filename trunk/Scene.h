@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <QObject>
+#include <limits>
 #include "BaseStruct.h"
 #include "trimesh/Vec.h"
 #include "Material.h"
@@ -14,10 +15,10 @@
 
 using namespace std;
 
-//// 不处理Material则注释
-//#ifndef DefMaterial
-//#define  DefMaterial
-//#endif
+// 不处理Material则注释
+#ifndef DefMaterial
+#define  DefMaterial
+#endif
 /*
 	对应一个场景，场景可以涵盖多个模型
 */
@@ -43,17 +44,24 @@ public:
 	vnormal *vnormals;
 	int Vnsize; // 法向个数
 
-	vtexture* vtextures;
-	int Vtsize; // 纹理个数
+
 
 	vector<Face*> faces;
-	int TextureNum; // 纹理段的个数，对应usemtl的那一段
+
+#ifdef DefMaterial
+	string mtlPath;
+
+	vtexture* vtextures;
+	int Vtsize; // 纹理个数
 
 	Material *materials;
 	int MtlSize;
 
+	int TextureNum; // 纹理段的个数，对应usemtl的那一段
+
 	vector<int> usemtlSlice; // 每次出现usemtl时，faces的个数。
 	vector<int> mtlMark; // 与usemtlSlice对应，usemtlSlice[i]~~usemtlSlice[i+1]对应的mtl为：mtlMark[i];
+#endif
 
 	int modelSize; // 总模型个数，算上墙壁
 	//Byte* mvisible;  // 该模型是否可见
@@ -67,8 +75,6 @@ public:
 	box bbox; //包围盒
 	BSphere bsphere; // 包围球
 
-
-
 	// 主要操作方法
 public:
     bool readScene(const char* filename);
@@ -77,6 +83,7 @@ public:
 	void need_bsphere();
 	void DrawTest();
 	void DrawSimpleScene(); //直接绘制模型，不分model
+	void SaveScene(); // 保存场景文件
 	// 辅助操作
 public:
 	// return false,没有找到对应格式处理程序
@@ -85,10 +92,16 @@ public:
     bool read_obj(const char* filename);
 	// 找到路径的文件夹地址
 	void ExtractBasePath(const char* filename);
+
 	// 分割由多个顶点构成的面片
-	void tess(const vector<int> &thisv,const vector<int> &thisvt,const vector<int> &thisvn);
+	void tess(const vector<int> &thisv,const vector<int> &thisvn);
+
+#ifdef DefMaterial
 	// 读取mtl纹理文件信息
 	void LoadMtl(string mtlPath);
+	// 分割由多个顶点构成的面片,处理纹理
+	void tess(const vector<int> &thisv,const vector<int> &thisvt,const vector<int> &thisvn);
+#endif
 	// 补充模型的结束Faces
 	void CompleteModelSetting();
 	// 找到模型的Tag

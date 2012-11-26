@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     QSceneDisplay.cpp \
     Model.cpp \
     Material.cpp \
-    Scene.cpp
+    Scene.cpp \
+    mersenne-twister.cpp
 
 HEADERS  += mainwindow.h \
     trimesh/XForm.h \
@@ -63,7 +64,8 @@ HEADERS  += mainwindow.h \
     BaseStruct.h \
     BaseFunction.h \
     Scene.h \
-    QSceneDisplay.h
+    QSceneDisplay.h \
+    mersenne-twister.h
 
 FORMS    += mainwindow.ui
 

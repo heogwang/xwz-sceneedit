@@ -2,9 +2,21 @@
 #include <QTextCodec>
 #include "mainwindow.h"
 
+#define DATAGENERATE
+
+#ifdef DATAGENERATE
+#include "PointDataManager.h"
+#endif
+
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+#ifdef DATAGENERATE
+	POINTACTION actions[] = {CALCPOINTS,SAVEPOINTS};
+	PointDataManager *m = new PointDataManager("D:\\geometry\\QSceneEdit\\conferenceroom\\",actions,sizeof(actions)/sizeof(POINTACTION));
+	delete m;
+	return 0;
+#endif
+	QApplication a(argc, argv);
 	// ∑¿÷π÷–Œƒ¬“¬Î
 	QTextCodec *codec = QTextCodec::codecForName("GB2312");   
 

@@ -44,8 +44,6 @@ public:
 	vnormal *vnormals;
 	int Vnsize; // 法向个数
 
-
-
 	vector<Face*> faces;
 
 #ifdef DefMaterial

@@ -56,7 +56,6 @@ public:
 	GLfloat *faceAreaSum;
 	point *samplePoints;
 	int pointNumber;
-	bool test;
 	// 自定义方法
 public:
 	void DrawModel();

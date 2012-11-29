@@ -12,7 +12,6 @@ Model::Model(void)
 	faceAreaSum = NULL;
 	samplePoints = NULL;
 	pointNumber = 0;
-	test = false;
 	mesh=NULL;
 }
 
@@ -33,7 +32,6 @@ Model::~Model(void)
 
 void Model::DrawModel()
 {
-	if(test) return;
 	glPushMatrix();
 	glTranslated(tx,ty,tz);
 	glRotated(yangle,0.0,1.0,0.0);
@@ -92,14 +90,18 @@ void Model::need_bsphere()
 
 void Model::DrawBbox()
 {
-	//
-	if(pointNumber == 0)
+	if(mesh == NULL)
 	{
-		CalculateArea();
-		GeneratePoints(1000);
+		ReadModel(scene->scenePath);
 	}
-	DrawPoints();
-	test = true;
+	DrawTrimesh();
+	//if(pointNumber == 0)
+	//{
+	//	CalculateArea();
+	//	GeneratePoints(1000);
+	//}
+	//DrawPoints();
+	if(mesh != NULL) return;
 	//
 	glPushMatrix();
 
@@ -145,14 +147,25 @@ void Model::CalculateArea()
 	{
 		delete []faceAreaSum;
 	}
-	int totalTriangle = faceEnd - faceStart;
+	/*int totalTriangle = faceEnd - faceStart;
 	faceAreaSum = new GLfloat[totalTriangle];
 	GLfloat currentSum = 0;
 	for(int i = 0;i<totalTriangle;i++)
 	{
-		Face* face = scene->faces[i+faceStart];
-		point a = scene->points[face->v[0]] - scene->points[face->v[1]];
-		point b = scene->points[face->v[2]] - scene->points[face->v[1]];
+	Face* face = scene->faces[i+faceStart];
+	point a = scene->points[face->v[0]] - scene->points[face->v[1]];
+	point b = scene->points[face->v[2]] - scene->points[face->v[1]];
+	currentSum += len(point(a[1]*b[2] - a[2]*b[1], a[2]*b[0] - a[0]*b[2], a[0]*b[1] - a[1]*b[0]))/2;
+	faceAreaSum[i] = currentSum;
+	}*/
+	int totalTriangle = mesh->faces.size();
+	faceAreaSum = new GLfloat[totalTriangle];
+	GLfloat currentSum = 0;
+	for(int i = 0;i<totalTriangle;i++)
+	{
+		TriMesh::Face face = mesh->faces[i];
+		point a = mesh->vertices[face[0]] - mesh->vertices[face[1]];
+		point b = mesh->vertices[face[2]] - mesh->vertices[face[1]];
 		currentSum += len(point(a[1]*b[2] - a[2]*b[1], a[2]*b[0] - a[0]*b[2], a[0]*b[1] - a[1]*b[0]))/2;
 		faceAreaSum[i] = currentSum;
 	}
@@ -167,7 +180,7 @@ void Model::GeneratePoints(int total)
 	pointNumber = total;
 	samplePoints = new point[total];
 	seed((unsigned)time(NULL));
-	int totalTriangle = faceEnd - faceStart;
+	int totalTriangle = mesh->faces.size();
 	GLfloat totalArea = faceAreaSum[totalTriangle - 1];
 	for(int i=0;i<pointNumber;i++)
 	{
@@ -209,10 +222,10 @@ void Model::GeneratePoints(int total)
 		float A = 1 - r1;
 		float B = r1 * (1 - r2);
 		float C = r1 * r2;
-		Face* face = scene->faces[current + faceStart];
-		point pA = scene->points[face->v[0]];
-		point pB = scene->points[face->v[1]];
-		point pC = scene->points[face->v[2]];
+		TriMesh::Face face = mesh->faces[current];
+		point pA = mesh->vertices[face[0]];
+		point pB = mesh->vertices[face[1]];
+		point pC = mesh->vertices[face[2]];
 		for(int j=0;j<3;j++)
 		{
 			samplePoints[i][j] = A*pA[j] + B*pB[j] + C*pC[j];
@@ -343,6 +356,9 @@ void Model::PCAOperation()
 	mesh->need_bsphere();
 	float a=1/mesh->bsphere.r;
 	scale(mesh,a);
+	mesh->need_bbox();
+	mesh->need_bsphere();
+	trans(mesh,-mesh->bsphere.center);
 	mesh->need_bbox();
 	mesh->need_bsphere();
 }

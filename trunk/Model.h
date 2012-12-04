@@ -11,6 +11,7 @@
 #include "trimesh/TriMesh_algo.h"
 #include <map>
 #include "mersenne-twister.h"
+#include <gsl/gsl_qrng.h>
 #include <time.h>
 
 using namespace std;
@@ -66,6 +67,11 @@ public:
 	void GeneratePoints(int total);
 	void DrawPoints();
 	void SaveSceneModel();
+	//
+	gsl_qrng * qRand;
+	void InitRand();
+	float GetRand(int type);
+	void EndRand();
 
 	// ÃèÊö×Ó·½·¨
 public:

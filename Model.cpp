@@ -179,12 +179,12 @@ void Model::GeneratePoints(int total)
 	}
 	pointNumber = total;
 	samplePoints = new point[total];
-	seed((unsigned)time(NULL));
 	int totalTriangle = mesh->faces.size();
+	InitRand();
 	GLfloat totalArea = faceAreaSum[totalTriangle - 1];
 	for(int i=0;i<pointNumber;i++)
 	{
-		GLfloat randArea = totalArea * randf_co();
+		GLfloat randArea = totalArea * GetRand(1);
 		//
 		int down = 0;
 		int up = totalTriangle-1;
@@ -217,8 +217,8 @@ void Model::GeneratePoints(int total)
 			}
 		}
 		//
-		float r1 = sqrt(randf_co());
-		float r2 = randf_co();
+		float r1 = sqrt(GetRand(1));
+		float r2 = GetRand(1);
 		float A = 1 - r1;
 		float B = r1 * (1 - r2);
 		float C = r1 * r2;
@@ -354,13 +354,15 @@ void Model::PCAOperation()
 	pca_rotate(mesh);
 	mesh->need_bbox();
 	mesh->need_bsphere();
-	float a=1/mesh->bsphere.r;
-	scale(mesh,a);
-	mesh->need_bbox();
-	mesh->need_bsphere();
-	trans(mesh,-mesh->bsphere.center);
-	mesh->need_bbox();
-	mesh->need_bsphere();
+	do
+	{
+		scale(mesh,1/mesh->bsphere.r);
+		mesh->need_bbox();
+		mesh->need_bsphere();
+		trans(mesh,-mesh->bsphere.center);
+		mesh->need_bbox();
+		mesh->need_bsphere();
+	}while(mesh->bsphere.r > 1.0f || mesh->bsphere.r < 0.999f || len(mesh->bsphere.center) > 0.001f);
 }
 
 void Model::DrawTrimesh()
@@ -384,4 +386,29 @@ void Model::DrawTrimesh()
 	glEnd();
 	glPopMatrix();
 	glFlush();
+}
+
+void Model::InitRand()
+{
+	seed((unsigned)time(NULL));
+	qRand = gsl_qrng_alloc (gsl_qrng_sobol, 1);
+}
+
+float Model::GetRand(int type)
+{
+	if(type == 1)
+	{
+		return randf_co();
+	}
+	if(type == 2)
+	{
+		double v[1];
+		gsl_qrng_get(qRand, v);
+		return v[0];
+	}
+}
+
+void Model::EndRand()
+{
+	gsl_qrng_free(qRand);
 }

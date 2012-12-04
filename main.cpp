@@ -11,7 +11,9 @@
 int main(int argc, char *argv[])
 {
 #ifdef DATAGENERATE
-	POINTACTION actions[] = {CALCPOINTS,SAVEPOINTS};
+	//POINTACTION actions[] = {CALCPOINTS,SAVEPOINTS};
+	POINTACTION actions[] = {CALCPOINTS,SAVEPOINTS,SAVED2,SAVESECTOR,SAVESHELL,SAVESECSHELL};
+	//POINTACTION actions[] = {VALID2};
 	PointDataManager *m = new PointDataManager("D:\\geometry\\QSceneEdit\\conferenceroom\\",actions,sizeof(actions)/sizeof(POINTACTION));
 	delete m;
 	return 0;
@@ -22,7 +24,7 @@ int main(int argc, char *argv[])
 
 	QTextCodec::setCodecForLocale(codec);   
 	QTextCodec::setCodecForCStrings(codec);   
-	QTextCodec::setCodecForTr(codec); 
+	QTextCodec::setCodecForTr(codec);
     MainWindow w;
     //w.show();
 	w.showMaximized(); 

@@ -18,6 +18,10 @@ int main(int argc, char *argv[])
 	delete m;
 	return 0;
 #endif
+
+#ifdef BNSTRAINING
+	LoadScenes();
+#endif
 	QApplication a(argc, argv);
 	// ·ÀÖ¹ÖÐÎÄÂÒÂë
 	QTextCodec *codec = QTextCodec::codecForName("GB2312");   

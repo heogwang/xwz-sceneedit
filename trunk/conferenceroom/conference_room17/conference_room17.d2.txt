@@ -42,29 +42,29 @@
 9 23 40 53 52 36 21 13 4 0 
 #Chair01
 9 24 40 54 52 36 20 12 4 0 
-#CellingLigth09
+#CellingLight09
 38 53 42 35 29 23 16 11 5 0 
-#CellingLigth08
+#CellingLight08
 7 24 37 43 43 36 36 20 5 0 
-#CellingLigth07
+#CellingLight07
 7 24 38 44 44 35 34 19 5 0 
-#CellingLigth06
+#CellingLight06
 7 24 38 44 44 35 35 19 5 0 
-#CellingLigth05
+#CellingLight05
 7 24 39 44 44 35 34 18 5 0 
-#CellingLigth04
+#CellingLight04
 7 24 38 44 44 35 34 19 5 0 
-#CellingLigth03
+#CellingLight03
 7 24 37 43 43 36 36 20 5 0 
-#CellingLigth02
+#CellingLight02
 7 24 37 43 43 36 36 20 5 0 
-#CellingLigth012
+#CellingLight012
 39 53 42 35 29 23 16 10 4 0 
-#CellingLigth011
+#CellingLight011
 39 53 41 35 29 23 17 11 4 0 
-#CellingLigth010
+#CellingLight010
 38 53 41 35 29 23 17 11 5 0 
-#CellingLigth01
+#CellingLight01
 7 24 38 42 43 36 36 20 6 0 
 #Cabinet
 9 42 55 43 34 24 19 14 9 3 

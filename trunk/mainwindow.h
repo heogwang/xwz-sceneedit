@@ -80,7 +80,7 @@ public slots:
     void SaveSceneFile();
 
 private:
-    Ui::MainWindow *ui;
+  s
 	void CreateDockWidget();
 	void CreateRelationItem(); // Ìí¼ÓQTreeWidgetµÄÄÚÈİ
 	void CreateActions();

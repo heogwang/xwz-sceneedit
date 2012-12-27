@@ -146,7 +146,8 @@ void MainWindow::CreateActions()
 
 void MainWindow::CreateMenu()
 {
-	fileMenu=ui->menuBar->addMenu(tr("文件"));
+	fileMenu=ui->menu
+	Bar->addMenu(tr("文件"));
 	fileMenu->addAction(openSceneAction);
 	fileMenu->addAction(saveSceneAction);
 

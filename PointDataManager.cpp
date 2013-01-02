@@ -4,6 +4,11 @@ PointDataManager::PointDataManager(string folderPath,POINTACTION actions[],int c
 {
 	POINTS = 2000;
 	binsD2 = 10;
+	binsShell = 36;
+	binsSector = 36;
+	binsSSShell = 6;
+	binsSSSector = 6;
+	//
 	model = NULL;
 	points = NULL;
 	//
@@ -353,7 +358,7 @@ void PointDataManager::saveShell(string totalPath, string fileName)
 		return;
 	}
 	//
-	const int BINS = 36;
+	const int BINS = binsShell;
 	int* bin = new int[BINS+1];
 	assert(bin != NULL);
 	memset(bin,0,(BINS+1) * sizeof(int));
@@ -408,7 +413,7 @@ void PointDataManager::saveSector(string totalPath, string fileName)
 		return;
 	}
 	//
-	const int BINS = 36;
+	const int BINS = binsSector;
 	int* bin = new int[BINS+1];
 	assert(bin != NULL);
 	memset(bin,0,(BINS+1) * sizeof(int));
@@ -468,8 +473,8 @@ void PointDataManager::saveSecShell(string totalPath, string fileName)
 		return;
 	}
 	//
-	const int BINSECTOR = 6;
-	const int BINSHELL = 6;
+	const int BINSECTOR = binsSSSector;
+	const int BINSHELL = binsSSShell;
 	const int BINS = BINSECTOR * BINSHELL;
 	int* bin = new int[BINS+1];
 	assert(bin != NULL);

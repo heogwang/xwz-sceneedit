@@ -1,0 +1,16 @@
+在main.cpp中通过宏控制
+如果定义DATAGENERATE，那么进入如下流程，否则正常运行
+
+actions是要指定的命令，将会按顺序执行，解释如下
+CALCPOINTS：计算点，是最慢的一步，所以一般会存起来，也可以不存储，计算后直接存储特征
+LOADPOINTS：读取点，读取存储的点，读取的是*.obj.txt,里面是原始数据，以提高效率
+SAVEPOINTS：存储点，存储*.obj,txt的同时存储了*.obj.points.txt，供人阅读或导入Rhinoceros 4.0等软件观看
+SAVED2：存储D2，文件名为*.d2.txt
+SAVESHELL：存储Shell，文件名为*.shell.txt
+SAVESECTOR：存储Sector，文件名为*.sector.txt
+SAVESECSHELL：存储Sector加Shell的情况，文件名为*.secshell.txt
+
+之后要修改的就是下面new PointDataManager的第一个参数，为模型目录的路径，注意，必须是母路径，即各个room上面的那一层
+若要修改bins与产生的点的数量，需要到PointDataManager的构造函数中
+
+小技巧：如果想只对某些room文件夹进行处理，可仿照PointDataManager的构造函数中循环上面的folders.push_back，push进去，同时把for循环末尾的break取消注释

@@ -46,9 +46,13 @@ public:
 	void valiD2(string totalPath);
 	//
 	bool saveShellstart;
+	int binsShell;
 	void saveShell(string totalPath, string fileName);
 	bool saveSectorstart;
+	int binsSector;
 	void saveSector(string totalPath, string fileName);
 	bool saveSecShellstart;
+	int binsSSShell;
+	int binsSSSector;
 	void saveSecShell(string totalPath, string fileName);
 };

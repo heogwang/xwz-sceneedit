@@ -2,7 +2,7 @@
 #include <QTextCodec>
 #include "mainwindow.h"
 
-#define DATAGENERATE
+//#define DATAGENERATE
 
 #ifdef DATAGENERATE
 #include "PointDataManager.h"
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 {
 #ifdef DATAGENERATE
 	//POINTACTION actions[] = {CALCPOINTS,SAVEPOINTS};
-	POINTACTION actions[] = {CALCPOINTS,SAVEPOINTS,SAVED2,SAVESECTOR,SAVESHELL,SAVESECSHELL};
+	POINTACTION actions[] = {LOADPOINTS,SAVED2,SAVESECTOR,SAVESHELL,SAVESECSHELL};
 	//POINTACTION actions[] = {VALID2};
 	PointDataManager *m = new PointDataManager("D:\\geometry\\QSceneEdit\\conferenceroom\\",actions,sizeof(actions)/sizeof(POINTACTION));
 	delete m;
